@@ -87,8 +87,8 @@ const CFG = {
   FINGER_T: [1.30, 1.70],     // index..pinky: tip-to-wrist / knuckle-to-wrist  (<t0 curled, <t1 half, else extended)
   THUMB_T:  [1.15, 1.60],     // thumb tip to pinky knuckle / palm width
   SPREAD_T: 12,               // degrees between adjacent extended fingers (<T together, >T apart)
-  MARGIN_R: 0.07,             // reject if a ratio is this close to a threshold (avoids flipping)
-  MARGIN_A: 3,                // same, for spread degrees
+  MARGIN_R: 0.00,             // reject if a ratio is this close to a threshold (avoids flipping)
+  MARGIN_A: 0,                // same, for spread degrees
   MAX_STD_R: 0.12,            // reject if a ratio varies more than this during capture
   MAX_STD_A: 6,               // same, for spread degrees
   KDF_ITER: 600000            // PBKDF2-HMAC-SHA256 iterations
