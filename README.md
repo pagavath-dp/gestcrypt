@@ -3,7 +3,7 @@
 Hand gesture -> quantized signature -> PBKDF2 -> AES-256-GCM file encryption. Everything runs in the browser; no key or file leaves the machine.
 
 ## Run
-Camera access needs `localhost` or https, so don't open the file directly.
+Camera access needs `localhost`.
 
 ```
 cd gestcrypt
