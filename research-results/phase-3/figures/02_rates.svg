@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="700" viewBox="0 0 1050 700" role="img">
+<rect width="1050" height="100%" fill="#ffffff"/>
+<text x="55" y="48" fill="#17283e" font-family="Arial, sans-serif" font-size="25" font-weight="bold" text-anchor="start">Acceptance and exact-match rates</text>
+<text x="55" y="77" fill="#41546b" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">STUDY-1873C987  |  PILOT — exploratory pilot  |  n=31 physical attempts</text>
+<text x="55" y="642" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Configurations: loose 0.02/1°, baseline 0.04/2°, strict 0.06/3°.</text>
+<text x="55" y="662" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Denominator: shown as n/d for each rate; N/A means no eligible reference.</text>
+<text x="55" y="682" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Valid protocol attempts only; excluded and unavailable-reference outcomes are reported separately.</text>
+<text x="55" y="112" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">Acceptance: signed / valid genuine. Conditional: match / signed with reference.</text>
+<text x="55" y="133" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">End-to-end: match / valid genuine with reference. Rejections are never mismatches.</text>
+<line x1="290.0" y1="165" x2="290.0" y2="600" stroke="#d1dae3"/>
+<text x="290.0" y="622" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">0%</text>
+<line x1="447.5" y1="165" x2="447.5" y2="600" stroke="#d1dae3"/>
+<text x="447.5" y="622" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">25%</text>
+<line x1="605.0" y1="165" x2="605.0" y2="600" stroke="#d1dae3"/>
+<text x="605.0" y="622" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">50%</text>
+<line x1="762.5" y1="165" x2="762.5" y2="600" stroke="#d1dae3"/>
+<text x="762.5" y="622" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">75%</text>
+<line x1="920.0" y1="165" x2="920.0" y2="600" stroke="#d1dae3"/>
+<text x="920.0" y="622" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">100%</text>
+<text x="55" y="194" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">loose · Acceptance</text>
+<rect x="290" y="177" width="551.25" height="23" fill="#216b9a"/>
+<text x="940" y="194" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">21/24 (88%)</text>
+<text x="55" y="233" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">loose · Conditional match</text>
+<rect x="290" y="216" width="540.00" height="23" fill="#17806d"/>
+<text x="940" y="233" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">18/21 (86%)</text>
+<text x="55" y="272" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">loose · End-to-end match</text>
+<rect x="290" y="255" width="472.50" height="23" fill="#8a5b9c"/>
+<text x="940" y="272" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">18/24 (75%)</text>
+<text x="55" y="339" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">baseline · Acceptance</text>
+<rect x="290" y="322" width="367.50" height="23" fill="#216b9a"/>
+<text x="940" y="339" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">14/24 (58%)</text>
+<text x="55" y="378" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">baseline · Conditional match</text>
+<rect x="290" y="361" width="540.00" height="23" fill="#17806d"/>
+<text x="940" y="378" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">12/14 (86%)</text>
+<text x="55" y="417" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">baseline · End-to-end match</text>
+<rect x="290" y="400" width="315.00" height="23" fill="#8a5b9c"/>
+<text x="940" y="417" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">12/24 (50%)</text>
+<text x="55" y="484" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">strict · Acceptance</text>
+<rect x="290" y="467" width="131.25" height="23" fill="#216b9a"/>
+<text x="940" y="484" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">5/24 (21%)</text>
+<text x="55" y="523" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">strict · Conditional match</text>
+<rect x="290" y="506" width="630.00" height="23" fill="#17806d"/>
+<text x="940" y="523" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">3/3 (100%)</text>
+<text x="55" y="562" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">strict · End-to-end match</text>
+<rect x="290" y="545" width="378.00" height="23" fill="#8a5b9c"/>
+<text x="940" y="562" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">3/5 (60%)</text>
+</svg>

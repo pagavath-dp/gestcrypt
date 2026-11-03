@@ -5,3 +5,13 @@ test.txt
 .idea/
 *.log
 *.tmp
+__pycache__/
+*.py[cod]
+~$*.docx
+/acceptance-testing/
+/camera-testing/
+/timeout-testing/
+/heldout-checkpoint/
+/GestCrypt_Report_Draft.pdf
+/Information_Security_Lab_Mini_Project_Final_Report_Template.docx
+/research-results/final-report/

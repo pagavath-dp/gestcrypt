@@ -1,0 +1,329 @@
+{
+  "analysis_schema": 1,
+  "study_id": "STUDY-1873C987",
+  "source_schema_version": 1,
+  "input_sha256": {
+    "csv": "70f5e08c9bfe9d4871cf6cc4979a346562f234bcffca75c8ffe48957e07bc8fc",
+    "json": "75f959073f31895813c545ef50cd1e34b5c2be3d8a05ee58278c59e852ffe3df"
+  },
+  "planned": {
+    "pilot": 24,
+    "heldout": 0
+  },
+  "recorded": {
+    "pilot": 31,
+    "heldout": 0
+  },
+  "uninitiated": {
+    "pilot": 0,
+    "heldout": 0
+  },
+  "overrun": {
+    "pilot": 7,
+    "heldout": 0
+  },
+  "frozen_config_id": null,
+  "pilot_source_study_id": null,
+  "splits": {
+    "pilot": {
+      "study_id": "STUDY-1873C987",
+      "split": "pilot",
+      "protocol_label": "exploratory pilot",
+      "schema_version": 1,
+      "frozen_config_id": null,
+      "physical_attempts": 31,
+      "excluded": {},
+      "retry_counts": null,
+      "reference_groups": null,
+      "configs": {
+        "loose": {
+          "valid_genuine_trials": 24,
+          "outcomes": {
+            "match": 18,
+            "rejected": 3,
+            "mismatch": 3
+          },
+          "signature_acceptance": {
+            "numerator": 21,
+            "denominator": 24,
+            "value": 0.875
+          },
+          "rejection": {
+            "numerator": 3,
+            "denominator": 24,
+            "value": 0.125
+          },
+          "conditional_match": {
+            "numerator": 18,
+            "denominator": 21,
+            "value": 0.8571428571428571
+          },
+          "end_to_end_match": {
+            "numerator": 18,
+            "denominator": 24,
+            "value": 0.75
+          },
+          "reference_acceptance": {
+            "numerator": 7,
+            "denominator": 7,
+            "value": 1.0
+          },
+          "rejection_reasons_genuine": {
+            "finger_ambiguous": 3
+          },
+          "rejection_reasons_reference": {},
+          "per_pose": {
+            "fist": {
+              "valid_trials": 6,
+              "outcomes": {
+                "match": 1,
+                "rejected": 2,
+                "mismatch": 3
+              }
+            },
+            "open_palm": {
+              "valid_trials": 7,
+              "outcomes": {
+                "match": 6,
+                "rejected": 1
+              }
+            },
+            "three_finger": {
+              "valid_trials": 6,
+              "outcomes": {
+                "match": 6
+              }
+            },
+            "swag": {
+              "valid_trials": 5,
+              "outcomes": {
+                "match": 5
+              }
+            }
+          }
+        },
+        "baseline": {
+          "valid_genuine_trials": 24,
+          "outcomes": {
+            "match": 12,
+            "rejected": 10,
+            "mismatch": 2
+          },
+          "signature_acceptance": {
+            "numerator": 14,
+            "denominator": 24,
+            "value": 0.5833333333333334
+          },
+          "rejection": {
+            "numerator": 10,
+            "denominator": 24,
+            "value": 0.4166666666666667
+          },
+          "conditional_match": {
+            "numerator": 12,
+            "denominator": 14,
+            "value": 0.8571428571428571
+          },
+          "end_to_end_match": {
+            "numerator": 12,
+            "denominator": 24,
+            "value": 0.5
+          },
+          "reference_acceptance": {
+            "numerator": 5,
+            "denominator": 7,
+            "value": 0.7142857142857143
+          },
+          "rejection_reasons_genuine": {
+            "finger_ambiguous": 10
+          },
+          "rejection_reasons_reference": {
+            "finger_ambiguous": 2
+          },
+          "per_pose": {
+            "fist": {
+              "valid_trials": 6,
+              "outcomes": {
+                "match": 1,
+                "rejected": 3,
+                "mismatch": 2
+              }
+            },
+            "open_palm": {
+              "valid_trials": 7,
+              "outcomes": {
+                "match": 4,
+                "rejected": 3
+              }
+            },
+            "three_finger": {
+              "valid_trials": 6,
+              "outcomes": {
+                "rejected": 3,
+                "match": 3
+              }
+            },
+            "swag": {
+              "valid_trials": 5,
+              "outcomes": {
+                "match": 4,
+                "rejected": 1
+              }
+            }
+          }
+        },
+        "strict": {
+          "valid_genuine_trials": 24,
+          "outcomes": {
+            "rejected_no_reference": 17,
+            "accepted_no_reference": 2,
+            "match": 3,
+            "rejected": 2
+          },
+          "signature_acceptance": {
+            "numerator": 5,
+            "denominator": 24,
+            "value": 0.20833333333333334
+          },
+          "rejection": {
+            "numerator": 19,
+            "denominator": 24,
+            "value": 0.7916666666666666
+          },
+          "conditional_match": {
+            "numerator": 3,
+            "denominator": 3,
+            "value": 1.0
+          },
+          "end_to_end_match": {
+            "numerator": 3,
+            "denominator": 5,
+            "value": 0.6
+          },
+          "reference_acceptance": {
+            "numerator": 1,
+            "denominator": 7,
+            "value": 0.14285714285714285
+          },
+          "rejection_reasons_genuine": {
+            "finger_ambiguous": 19
+          },
+          "rejection_reasons_reference": {
+            "finger_ambiguous": 6
+          },
+          "per_pose": {
+            "fist": {
+              "valid_trials": 6,
+              "outcomes": {
+                "rejected_no_reference": 5,
+                "accepted_no_reference": 1
+              }
+            },
+            "open_palm": {
+              "valid_trials": 7,
+              "outcomes": {
+                "rejected_no_reference": 6,
+                "accepted_no_reference": 1
+              }
+            },
+            "three_finger": {
+              "valid_trials": 6,
+              "outcomes": {
+                "rejected_no_reference": 6
+              }
+            },
+            "swag": {
+              "valid_trials": 5,
+              "outcomes": {
+                "match": 3,
+                "rejected": 2
+              }
+            }
+          }
+        }
+      },
+      "latency": {
+        "attempt_ms": {
+          "count": 31,
+          "median_ms": 829.0,
+          "min_ms": 805.0,
+          "max_ms": 858.0
+        },
+        "capture_ms": {
+          "count": 31,
+          "median_ms": 829.0,
+          "min_ms": 805.0,
+          "max_ms": 858.0
+        }
+      },
+      "latency_values_ms": {
+        "attempt_ms": [
+          828.0,
+          858.0,
+          834.0,
+          834.0,
+          822.0,
+          846.0,
+          831.0,
+          834.0,
+          838.0,
+          828.0,
+          828.0,
+          823.0,
+          844.0,
+          832.0,
+          822.0,
+          832.0,
+          819.0,
+          827.0,
+          829.0,
+          826.0,
+          846.0,
+          819.0,
+          805.0,
+          821.0,
+          846.0,
+          825.0,
+          834.0,
+          829.0,
+          829.0,
+          816.0,
+          839.0
+        ],
+        "capture_ms": [
+          827.0,
+          858.0,
+          834.0,
+          834.0,
+          821.0,
+          846.0,
+          831.0,
+          834.0,
+          838.0,
+          827.0,
+          828.0,
+          823.0,
+          844.0,
+          832.0,
+          822.0,
+          832.0,
+          819.0,
+          827.0,
+          829.0,
+          826.0,
+          846.0,
+          819.0,
+          805.0,
+          821.0,
+          846.0,
+          825.0,
+          834.0,
+          829.0,
+          829.0,
+          816.0,
+          839.0
+        ]
+      }
+    }
+  }
+}

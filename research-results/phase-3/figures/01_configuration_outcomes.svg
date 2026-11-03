@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="610" viewBox="0 0 1050 610" role="img">
+<rect width="1050" height="100%" fill="#ffffff"/>
+<text x="55" y="48" fill="#17283e" font-family="Arial, sans-serif" font-size="25" font-weight="bold" text-anchor="start">Genuine trial outcomes by configuration</text>
+<text x="55" y="77" fill="#41546b" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">STUDY-1873C987  |  PILOT — exploratory pilot  |  n=31 physical attempts</text>
+<text x="55" y="552" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Configurations: loose 0.02/1°, baseline 0.04/2°, strict 0.06/3°.</text>
+<text x="55" y="572" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Denominator: valid genuine trials per configuration.</text>
+<text x="55" y="592" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Valid protocol attempts only; excluded and unavailable-reference outcomes are reported separately.</text>
+<rect x="55" y="108" width="14.00" height="14" fill="#17806d"/>
+<text x="77" y="120" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Match</text>
+<rect x="380" y="108" width="14.00" height="14" fill="#c46d42"/>
+<text x="402" y="120" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Mismatch</text>
+<rect x="705" y="108" width="14.00" height="14" fill="#ad4770"/>
+<text x="727" y="120" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Rejected with reference</text>
+<rect x="55" y="138" width="14.00" height="14" fill="#7852a2"/>
+<text x="77" y="150" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Rejected; no reference</text>
+<rect x="380" y="138" width="14.00" height="14" fill="#a98135"/>
+<text x="402" y="150" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Accepted; no reference</text>
+<text x="55" y="236" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">loose</text>
+<rect x="245" y="220" width="465.00" height="28" fill="#17806d"/>
+<text x="477.5" y="239" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">18</text>
+<rect x="710.0" y="220" width="77.50" height="28" fill="#c46d42"/>
+<text x="748.75" y="239" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="787.5" y="220" width="77.50" height="28" fill="#ad4770"/>
+<text x="826.25" y="239" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="865.0" y="220" width="0.00" height="28" fill="#7852a2"/>
+<rect x="865.0" y="220" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="239" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=24</text>
+<text x="55" y="321" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">baseline</text>
+<rect x="245" y="305" width="310.00" height="28" fill="#17806d"/>
+<text x="400.0" y="324" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">12</text>
+<rect x="555.0" y="305" width="51.67" height="28" fill="#c46d42"/>
+<text x="580.8333333333334" y="324" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<rect x="606.6666666666666" y="305" width="258.33" height="28" fill="#ad4770"/>
+<text x="735.8333333333333" y="324" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">10</text>
+<rect x="865.0" y="305" width="0.00" height="28" fill="#7852a2"/>
+<rect x="865.0" y="305" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="324" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=24</text>
+<text x="55" y="406" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">strict</text>
+<rect x="245" y="390" width="77.50" height="28" fill="#17806d"/>
+<text x="283.75" y="409" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="322.5" y="390" width="0.00" height="28" fill="#c46d42"/>
+<rect x="322.5" y="390" width="51.67" height="28" fill="#ad4770"/>
+<text x="348.3333333333333" y="409" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<rect x="374.1666666666667" y="390" width="439.17" height="28" fill="#7852a2"/>
+<text x="593.75" y="409" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">17</text>
+<rect x="813.3333333333334" y="390" width="51.67" height="28" fill="#a98135"/>
+<text x="839.1666666666667" y="409" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<text x="880" y="409" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=24</text>
+</svg>

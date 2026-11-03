@@ -1,0 +1,9 @@
+# Phase 3 Summary — Exploratory Gesture Pilot
+
+The validated pilot contains **31 physical attempts in one session**: **7 references and 24 genuine trials**. The three configurations were evaluated on the same attempts. Loose margins accepted signatures in **21/24 trials (87.5%)**, baseline in **14/24 (58.3%)**, and strict in **5/24 (20.8%)**. Strict's **3/3 conditional matches** came from only three comparable accepted trials; only **1/7** strict references was accepted. Rejection and lack of an available reference must be reported separately because they overlap.
+
+These observations show a practical availability trade-off, not a proven optimal threshold or biometric-security result. Loose margins had the most matches with an available reference (**18/24**) but also **3 accepted mismatches**; the pilot contains no different-pose or second-person attempts to assess unintended matches. All recorded captures completed, and the **829 ms median** timing includes readiness waiting.
+
+The next experimental step is to document a pilot-based configuration choice and freeze it before a separate held-out session. That session should record every planned reference, genuine trial, different-pose attempt, rejection, retry, exclusion, and latency; consented second-person attempts can be added if feasible. Analyze the held-out split separately, keep the frozen configuration as the primary comparison, and do not tune margins from those results. The study still cannot establish population-level identity assurance without a larger, appropriately sampled evaluation.
+
+See the [full results](results.md), [discussion](discussion.md), [limitations](limitations.md), and [amended pilot analysis report](analysis_report_amended.md). The six presentation figures are in [figures](figures/); the original validated Phase 2 outputs remain in [analysis-output](../../analysis-output/pilot-STUDY-1873C987/).
