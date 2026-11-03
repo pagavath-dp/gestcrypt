@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="650" viewBox="0 0 1050 650" role="img">
+<rect width="1050" height="100%" fill="#ffffff"/>
+<text x="55" y="48" fill="#17283e" font-family="Arial, sans-serif" font-size="25" font-weight="bold" text-anchor="start">Physical-attempt latency distributions</text>
+<text x="55" y="77" fill="#41546b" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">STUDY-1873C987  |  PILOT — exploratory pilot  |  n=31 physical attempts</text>
+<text x="55" y="592" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Configurations: loose 0.02/1°, baseline 0.04/2°, strict 0.06/3°.</text>
+<text x="55" y="612" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Denominator: valid timed physical attempts; each dot is one attempt.</text>
+<text x="55" y="632" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Valid protocol attempts only; excluded and unavailable-reference outcomes are reported separately.</text>
+<text x="55" y="120" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">Attempt: initiation to finish. Capture: readiness wait plus 25-frame capture.</text>
+<line x1="285" y1="162" x2="285" y2="510" stroke="#d1dae3"/>
+<text x="285" y="540" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">805 ms</text>
+<line x1="435" y1="162" x2="435" y2="510" stroke="#d1dae3"/>
+<text x="435" y="540" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">818 ms</text>
+<line x1="585" y1="162" x2="585" y2="510" stroke="#d1dae3"/>
+<text x="585" y="540" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">832 ms</text>
+<line x1="735" y1="162" x2="735" y2="510" stroke="#d1dae3"/>
+<text x="735" y="540" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">845 ms</text>
+<line x1="885" y1="162" x2="885" y2="510" stroke="#d1dae3"/>
+<text x="885" y="540" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">858 ms</text>
+<text x="55" y="193" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="normal" text-anchor="start">Attempt Ms  n=31; median=829.0 ms</text>
+<circle cx="285.00" cy="217.00" r="4" fill="#216b9a"/>
+<circle cx="409.53" cy="224.00" r="4" fill="#216b9a"/>
+<circle cx="443.49" cy="231.00" r="4" fill="#216b9a"/>
+<circle cx="443.49" cy="238.00" r="4" fill="#216b9a"/>
+<circle cx="466.13" cy="245.00" r="4" fill="#216b9a"/>
+<circle cx="477.45" cy="252.00" r="4" fill="#216b9a"/>
+<circle cx="477.45" cy="259.00" r="4" fill="#216b9a"/>
+<circle cx="488.77" cy="266.00" r="4" fill="#216b9a"/>
+<circle cx="511.42" cy="273.00" r="4" fill="#216b9a"/>
+<circle cx="522.74" cy="217.00" r="4" fill="#216b9a"/>
+<circle cx="534.06" cy="224.00" r="4" fill="#216b9a"/>
+<circle cx="545.38" cy="231.00" r="4" fill="#216b9a"/>
+<circle cx="545.38" cy="238.00" r="4" fill="#216b9a"/>
+<circle cx="545.38" cy="245.00" r="4" fill="#216b9a"/>
+<circle cx="556.70" cy="252.00" r="4" fill="#216b9a"/>
+<circle cx="556.70" cy="259.00" r="4" fill="#216b9a"/>
+<circle cx="556.70" cy="266.00" r="4" fill="#216b9a"/>
+<circle cx="579.34" cy="273.00" r="4" fill="#216b9a"/>
+<circle cx="590.66" cy="217.00" r="4" fill="#216b9a"/>
+<circle cx="590.66" cy="224.00" r="4" fill="#216b9a"/>
+<circle cx="613.30" cy="231.00" r="4" fill="#216b9a"/>
+<circle cx="613.30" cy="238.00" r="4" fill="#216b9a"/>
+<circle cx="613.30" cy="245.00" r="4" fill="#216b9a"/>
+<circle cx="613.30" cy="252.00" r="4" fill="#216b9a"/>
+<circle cx="658.58" cy="259.00" r="4" fill="#216b9a"/>
+<circle cx="669.91" cy="266.00" r="4" fill="#216b9a"/>
+<circle cx="726.51" cy="273.00" r="4" fill="#216b9a"/>
+<circle cx="749.15" cy="217.00" r="4" fill="#216b9a"/>
+<circle cx="749.15" cy="224.00" r="4" fill="#216b9a"/>
+<circle cx="749.15" cy="231.00" r="4" fill="#216b9a"/>
+<circle cx="885.00" cy="238.00" r="4" fill="#216b9a"/>
+<line x1="556.6981132075472" y1="199" x2="556.6981132075472" y2="293" stroke="#216b9a"/>
+<text x="55" y="348" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="normal" text-anchor="start">Capture Ms  n=31; median=829.0 ms</text>
+<circle cx="285.00" cy="372.00" r="4" fill="#17806d"/>
+<circle cx="409.53" cy="379.00" r="4" fill="#17806d"/>
+<circle cx="443.49" cy="386.00" r="4" fill="#17806d"/>
+<circle cx="443.49" cy="393.00" r="4" fill="#17806d"/>
+<circle cx="466.13" cy="400.00" r="4" fill="#17806d"/>
+<circle cx="466.13" cy="407.00" r="4" fill="#17806d"/>
+<circle cx="477.45" cy="414.00" r="4" fill="#17806d"/>
+<circle cx="488.77" cy="421.00" r="4" fill="#17806d"/>
+<circle cx="511.42" cy="428.00" r="4" fill="#17806d"/>
+<circle cx="522.74" cy="372.00" r="4" fill="#17806d"/>
+<circle cx="534.06" cy="379.00" r="4" fill="#17806d"/>
+<circle cx="534.06" cy="386.00" r="4" fill="#17806d"/>
+<circle cx="534.06" cy="393.00" r="4" fill="#17806d"/>
+<circle cx="545.38" cy="400.00" r="4" fill="#17806d"/>
+<circle cx="556.70" cy="407.00" r="4" fill="#17806d"/>
+<circle cx="556.70" cy="414.00" r="4" fill="#17806d"/>
+<circle cx="556.70" cy="421.00" r="4" fill="#17806d"/>
+<circle cx="579.34" cy="428.00" r="4" fill="#17806d"/>
+<circle cx="590.66" cy="372.00" r="4" fill="#17806d"/>
+<circle cx="590.66" cy="379.00" r="4" fill="#17806d"/>
+<circle cx="613.30" cy="386.00" r="4" fill="#17806d"/>
+<circle cx="613.30" cy="393.00" r="4" fill="#17806d"/>
+<circle cx="613.30" cy="400.00" r="4" fill="#17806d"/>
+<circle cx="613.30" cy="407.00" r="4" fill="#17806d"/>
+<circle cx="658.58" cy="414.00" r="4" fill="#17806d"/>
+<circle cx="669.91" cy="421.00" r="4" fill="#17806d"/>
+<circle cx="726.51" cy="428.00" r="4" fill="#17806d"/>
+<circle cx="749.15" cy="372.00" r="4" fill="#17806d"/>
+<circle cx="749.15" cy="379.00" r="4" fill="#17806d"/>
+<circle cx="749.15" cy="386.00" r="4" fill="#17806d"/>
+<circle cx="885.00" cy="393.00" r="4" fill="#17806d"/>
+<line x1="556.6981132075472" y1="354" x2="556.6981132075472" y2="448" stroke="#17806d"/>
+</svg>

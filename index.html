@@ -6,144 +6,528 @@
 <title>GestCrypt</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  :root { color-scheme: dark; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  main, #workspace, #workspace > section, #paneMain, #paneTest, #paneLab, #paneResults { min-width: 0; }
+  p, label, h1, h2, h3 { overflow-wrap: anywhere; }
   .mirror { transform: scaleX(-1); }
-  button:focus-visible, input:focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; }
+  button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; }
+  .nav-button { flex: 0 0 auto; border-bottom: 2px solid transparent; color: #cbd5e1; padding: .8rem 1rem; text-align: left; font-size: .875rem; white-space: nowrap; }
+  .nav-button:hover { color: #f8fafc; background: #1e293b; }
+  .nav-button[aria-current="page"] { border-color: #22d3ee; color: #a5f3fc; background: #1e293b; font-weight: 600; }
+  #primaryNav { overflow-x: auto; scrollbar-width: thin; }
+  button { min-height: 2.75rem; transition: background-color .15s ease; }
+  button:disabled { cursor: not-allowed; opacity: .55; }
+  input:not([type="checkbox"]):not([type="hidden"]), select { min-height: 2.75rem; max-width: 100%; }
+  input[type="file"] { min-width: 0; }
+  #workspace > section:last-child { background: #0f172a; }
+  #paneMain > div:first-child, #paneTest > h2, #paneLab > h2 { padding-bottom: .25rem; }
+  .vault-panel { min-width: 0; padding: 1.25rem 0 .25rem; border-top: 1px solid #334155; }
+  .vault-panel h3 { font-size: 1rem; font-weight: 600; color: #f1f5f9; }
+  .vault-fields { display: grid; gap: 1rem; }
+  .vault-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .vault-actions > button { flex: 1 1 11rem; min-width: 0; }
+  .vault-actions-secondary > button { flex: 0 1 auto; }
+  #vaultRecoveryCode { max-width: 100%; overflow-wrap: anywhere; word-break: break-all; line-height: 1.7; letter-spacing: .02em; user-select: all; }
+  #vaultPending { padding: 1.25rem; border: 1px solid #0e7490; border-radius: .75rem; background: #0b1220; }
+  #status, #vaultEnrollStatus, #captureStatus, #studyStatus, #labStatus { overflow-wrap: anywhere; }
+  #labResults, #stats, #studyRecovery { overflow-wrap: anywhere; }
+  #status { border-left: 3px solid #22d3ee; }
+  #paneTest [aria-label="Study metadata"] select { width: 100%; margin-top: .25rem; }
+  #cameraPreview { width: 100%; max-width: 32rem; }
+  #readout { max-height: 8rem; overflow-y: auto; }
+  .results-view #cameraPreview, .lab-view #cameraPreview { max-width: 18rem; }
+  .pilot-figures { max-width: 58rem; }
+  .pilot-figures figure { min-width: 0; overflow-x: auto; }
+  .pilot-figures img { height: auto; }
+  .mobile-scroll-hint { display: none; }
+  .pilot-dashboard { color: #e2e8f0; }
+  .pilot-kicker { color: #5eead4; font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+  .pilot-toolbar { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; }
+  .pilot-toolbar label { min-width: min(100%, 15rem); color: #cbd5e1; font-size: .8rem; }
+  .pilot-toolbar select { width: 100%; margin-top: .4rem; padding: .65rem .8rem; border: 1px solid #475569; border-radius: .5rem; background: #0f172a; color: #f8fafc; }
+  .pilot-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+  .pilot-metric, .pilot-chart { min-width: 0; border: 1px solid #334155; border-radius: .75rem; background: #0b1629; }
+  .pilot-metric { padding: 1rem; border-top: 2px solid var(--pilot-accent); }
+  .pilot-accent-cyan { --pilot-accent: #22d3ee; }
+  .pilot-accent-magenta { --pilot-accent: #d48eb5; }
+  .pilot-accent-violet { --pilot-accent: #a78bfa; }
+  .pilot-metric-label { color: #cbd5e1; font-size: .8rem; }
+  .pilot-metric-value { display: block; margin-top: .2rem; color: var(--pilot-accent); font-size: clamp(1.5rem, 2.5vw, 2rem); line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .pilot-metric-fraction { margin-top: .35rem; color: #94a3b8; font-size: .76rem; }
+  .pilot-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .pilot-chart { padding: 1.15rem; }
+  .pilot-chart h4 { color: #f8fafc; font-size: .95rem; font-weight: 600; }
+  .pilot-chart-subtitle, .pilot-chart-note { margin-top: .25rem; color: #94a3b8; font-size: .76rem; }
+  .pilot-outcome-row { margin-top: 1rem; padding: .65rem; border: 1px solid transparent; border-radius: .5rem; transition: background-color .2s, border-color .2s; }
+  .pilot-outcome-row.selected { border-color: #155e75; background: #102538; }
+  .pilot-outcome-header, .pilot-rate-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .25rem .6rem; font-size: .8rem; }
+  .pilot-outcome-header span, .pilot-rate-heading span { color: #cbd5e1; font-variant-numeric: tabular-nums; }
+  .pilot-stacked { display: flex; height: 2rem; margin-top: .5rem; border-radius: .4rem; background: #1e293b; }
+  .pilot-segment { position: relative; flex: 0 0 var(--segment-width); width: var(--segment-width); min-height: 2rem; padding: 0; border: 0; transform: scaleX(0); transform-origin: left center; cursor: help; }
+  .pilot-segment:first-child { border-radius: .4rem 0 0 .4rem; }
+  .pilot-segment:last-child { border-radius: 0 .4rem .4rem 0; }
+  @keyframes pilot-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .pilot-dashboard.is-visible .pilot-segment { transform: scaleX(1); animation: pilot-grow .7s cubic-bezier(.2,.75,.25,1) both; }
+  .pilot-match { background: #2dd4bf; }
+  .pilot-mismatch { background: #a78bfa; }
+  .pilot-rejected { background: #c67eaa; }
+  .pilot-unavailable { background: #67a8bd; }
+  .pilot-cyan { background: #22d3ee; }
+  .pilot-teal { background: #2dd4bf; }
+  .pilot-violet { background: #a78bfa; }
+  .pilot-segment:hover, .pilot-segment:focus-visible { filter: brightness(1.2); z-index: 2; }
+  .pilot-segment:focus-visible { outline: 2px solid #f8fafc; outline-offset: -3px; }
+  .pilot-tooltip { width: fit-content; max-width: 100%; margin-top: .45rem; padding: .3rem .55rem; border: 1px solid #475569; border-radius: .35rem; background: #17243a; color: #f8fafc; font-size: .75rem; line-height: 1.35; overflow-wrap: anywhere; }
+  .pilot-tooltip[hidden] { display: none; }
+  @keyframes pilot-refresh { from { opacity: .65; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+  .pilot-dashboard.is-visible .pilot-metric, .pilot-dashboard.is-visible .pilot-rate-row, .pilot-dashboard.is-visible .pilot-pose-row { animation: pilot-refresh .25s ease-out both; }
+  .pilot-legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin-top: 1rem; color: #cbd5e1; font-size: .75rem; }
+  .pilot-legend span::before { display: inline-block; width: .6rem; height: .6rem; margin-right: .4rem; border-radius: .15rem; background: var(--legend-color); content: ''; }
+  .pilot-rate-row { margin-top: 1rem; }
+  .pilot-rate-track { height: .65rem; margin-top: .5rem; overflow: hidden; border-radius: 999px; background: #1e293b; }
+  .pilot-rate-fill { width: var(--rate-width); height: 100%; border-radius: 999px; transform: scaleX(0); transform-origin: left center; }
+  .pilot-dashboard.is-visible .pilot-rate-fill { transform: scaleX(1); animation: pilot-grow .75s cubic-bezier(.2,.75,.25,1) both; }
+  .pilot-rate-definition { margin-top: .3rem; color: #94a3b8; font-size: .72rem; }
+  .pilot-pose-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2rem 1rem; padding: .6rem 0; border-top: 1px solid #243449; font-size: .8rem; }
+  .pilot-pose-row span { color: #cbd5e1; font-variant-numeric: tabular-nums; }
+  .pilot-dashboard details summary { cursor: pointer; }
+  .pilot-source-details { border-top: 1px solid #334155; padding-top: 1rem; }
+  .pilot-source-details summary { color: #67e8f9; font-size: .85rem; font-weight: 600; }
+  .pilot-source-details[open] summary { margin-bottom: .85rem; }
+  @media (prefers-reduced-motion: reduce) {
+    .pilot-dashboard *, .pilot-dashboard *::before, .pilot-dashboard *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .pilot-segment, .pilot-rate-fill { transform: none !important; }
+  }
+  #workspace.results-view > section:first-child, #workspace.lab-view > section:first-child { order: 2; }
+  #workspace.results-view > section:last-child, #workspace.lab-view > section:last-child { order: 1; }
+  @media (min-width: 1000px) {
+    #workspace { grid-template-columns: minmax(0, 1.35fr) minmax(19rem, .8fr); align-items: start; }
+    #workspace > section:first-child { order: 2; position: sticky; top: 1.5rem; }
+    #workspace > section:last-child { order: 1; }
+    #workspace.results-view { grid-template-columns: minmax(0, 1fr); }
+    #workspace.results-view > section:first-child { position: static; }
+  }
+  @media (min-width: 700px) {
+    .vault-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .vault-fields > label:first-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 699px) {
+    .vault-panel { padding-top: 1rem; }
+    #vaultPending { padding: 1rem; }
+    .vault-actions > button { flex-basis: 100%; width: 100%; }
+    #paneTest .flex-wrap > button { flex-grow: 1; }
+    #paneTest .flex-wrap > label { width: 100%; min-width: 0; }
+    #paneTest .flex-wrap > label input { width: 100%; }
+    #camMsg { padding: 1rem; text-align: center; }
+    #readout { white-space: pre-wrap; overflow-wrap: anywhere; }
+    .pilot-figures img { min-width: 34rem; max-width: none; }
+    .mobile-scroll-hint { display: block; }
+    .pilot-metrics, .pilot-charts { grid-template-columns: minmax(0, 1fr); }
+    .pilot-chart { padding: 1rem; }
+  }
+  @media (max-width: 430px) {
+    .nav-button { padding: .75rem .85rem; }
+    #cameraPreview { max-width: none; }
+    #paneTest [aria-label="Study metadata"] { grid-template-columns: minmax(0, 1fr); }
+    #paneTest [aria-label="Study metadata"] label { min-width: 0; }
+  }
 </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">
-<main class="max-w-6xl mx-auto p-4 md:p-8">
-  <header class="mb-6">
-    <h1 class="text-3xl font-semibold tracking-tight">GestCrypt</h1>
-    <p class="text-slate-400 mt-1">Encrypt a file with a hand gesture. Your key is never stored.</p>
+<main class="max-w-7xl mx-auto px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
+  <header class="mb-6 border-b border-slate-800 pb-5">
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">GestCrypt</h1>
+    <p class="text-sm text-slate-400 mt-1">Local gesture-assisted file encryption. Use a strong passphrase for sensitive files.</p>
   </header>
+  <nav id="primaryNav" aria-label="Primary sections" class="mb-2 flex gap-1 border-b border-slate-700">
+    <button id="tabMain" type="button" class="nav-button" aria-controls="paneMain" aria-current="page">Vault</button>
+    <button id="tabTest" type="button" class="nav-button" aria-controls="paneTest">Gesture Calibration</button>
+    <button id="tabLab" type="button" class="nav-button" aria-controls="paneLab">Security Attack Lab</button>
+    <button id="tabResults" type="button" class="nav-button" aria-controls="paneResults">Evaluation Results</button>
+  </nav>
+  <p id="navStatus" role="status" aria-live="polite" class="mb-4 min-h-5 text-xs text-slate-400"></p>
 
-  <div class="grid md:grid-cols-2 gap-6">
+  <div id="workspace" class="grid gap-6 lg:gap-8">
     <!-- Camera -->
-    <section>
-      <div class="relative rounded-xl overflow-hidden bg-black aspect-video border border-slate-800">
+    <section aria-label="Camera and gesture status" class="min-w-0 space-y-3 rounded-xl border border-slate-800 bg-slate-900/60 p-4 sm:p-5">
+      <div>
+        <h2 class="text-lg font-semibold">Camera and gesture status</h2>
+        <p class="text-sm text-slate-400">Used for Vault gesture enrollment, normal Vault access, and gesture calibration. Emergency recovery does not need the camera.</p>
+      </div>
+      <div id="cameraPreview" class="relative rounded-xl overflow-hidden bg-black aspect-video border border-slate-800">
         <video id="video" class="w-full h-full object-cover mirror" autoplay playsinline muted></video>
         <canvas id="overlay" class="absolute inset-0 w-full h-full mirror"></canvas>
-        <div id="camMsg" class="absolute inset-0 flex items-center justify-center text-slate-400 text-sm">Starting camera…</div>
+        <div id="camMsg" class="absolute inset-0 flex items-center justify-center text-slate-400 text-sm">Camera idle. Start Vault enrollment or Gesture Calibration for capture.</div>
       </div>
       <div class="mt-3 h-2 bg-slate-800 rounded"><div id="bar" class="h-2 bg-cyan-400 rounded" style="width:0%"></div></div>
+      <div id="captureStatus" role="status" aria-live="polite" aria-atomic="true" class="mt-2 text-sm text-slate-300">Camera idle.</div>
       <pre id="readout" class="mt-3 text-xs text-slate-400 bg-slate-900 border border-slate-800 rounded-lg p-3 overflow-x-auto">No hand detected</pre>
     </section>
 
     <!-- Controls -->
-    <section class="space-y-5">
-      <div class="flex gap-2 border-b border-slate-800">
-        <button id="tabMain" class="px-4 py-2 border-b-2 border-cyan-400 text-cyan-300">Encrypt / decrypt</button>
-        <button id="tabTest" class="px-4 py-2 border-b-2 border-transparent text-slate-400">Test mode</button>
-      </div>
-
-      <div id="paneMain" class="space-y-4">
-        <label class="block">
-          <span class="text-sm text-slate-300">File</span>
-          <input id="file" type="file" class="mt-1 block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-800 file:px-3 file:py-2 file:text-slate-100">
-        </label>
-        <label class="block">
-          <span class="text-sm text-slate-300">PIN (optional second factor)</span>
-          <input id="pin" type="password" autocomplete="off" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2">
-        </label>
-        <p class="text-sm text-slate-400">Hold your gesture steady in front of the camera, then press a button. Use the same gesture and PIN to decrypt.</p>
-        <div class="flex gap-3">
-          <button id="btnEnc" class="flex-1 rounded-md bg-cyan-500 text-slate-950 font-medium py-2.5 hover:bg-cyan-400">Encrypt file</button>
-          <button id="btnDec" class="flex-1 rounded-md bg-slate-800 font-medium py-2.5 hover:bg-slate-700">Decrypt file</button>
+    <section class="min-w-0 rounded-xl border border-slate-800 p-4 sm:p-6">
+      <div id="paneMain" class="space-y-5">
+        <div>
+          <h2 class="text-xl font-semibold">Vault</h2>
+          <p class="text-sm text-slate-400 mt-1">Normal access requires your enrolled gesture, passphrase, and this browser profile's local key. Emergency recovery uses the file's recovery key.</p>
         </div>
-        <div id="status" class="text-sm rounded-md bg-slate-900 border border-slate-800 p-3 min-h-[3rem] whitespace-pre-wrap">Ready.</div>
+        <div class="vault-panel space-y-3">
+          <h3>Set up this browser</h3>
+          <p class="text-xs text-slate-400">The Vault gesture is separate from study references. Enroll using two separately started matching captures. A gesture is an application gate, not proof of identity or liveness.</p>
+          <div class="vault-actions vault-actions-secondary">
+            <button id="btnVaultInitDevice" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm">Set up local device key</button>
+            <button id="btnVaultEnrollStart" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm">Start gesture enrollment</button>
+            <button id="btnVaultEnrollCapture" type="button" class="rounded-md bg-cyan-500 px-3 py-2 text-sm font-medium text-slate-950" disabled>Capture enrollment gesture</button>
+            <button id="btnVaultEnrollCancel" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm" disabled>Cancel enrollment</button>
+          </div>
+          <p id="vaultEnrollStatus" role="status" aria-live="polite" class="text-sm text-slate-300">Vault enrollment has not been checked in this page session.</p>
+        </div>
+        <div class="vault-panel space-y-4">
+          <div><h3>File and passphrase</h3><p class="mt-1 text-xs text-slate-400">Choose a file for any operation. Confirm the passphrase when encrypting or rebinding.</p></div>
+          <div class="vault-fields">
+            <label class="block min-w-0">
+              <span class="text-sm text-slate-300">File</span>
+              <input id="file" type="file" class="mt-1 block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-800 file:px-3 file:py-2 file:text-slate-100">
+            </label>
+            <label class="block min-w-0">
+              <span class="text-sm text-slate-300">Passphrase (required; at least 12 characters for new files)</span>
+              <input id="passphrase" type="password" autocomplete="new-password" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2">
+            </label>
+            <label class="block min-w-0">
+              <span class="text-sm text-slate-300">Confirm passphrase (encryption or rebind)</span>
+              <input id="passphraseConfirm" type="password" autocomplete="new-password" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2">
+            </label>
+          </div>
+        </div>
+        <input id="pin" type="hidden" value="">
+        <div class="vault-panel space-y-3">
+          <h3>Normal access</h3>
+          <p class="text-sm text-slate-400">Every encrypt or decrypt action starts a fresh Vault gesture capture. Unsupported file formats are rejected before authentication.</p>
+          <div class="vault-actions">
+            <button id="btnEnc" class="rounded-md bg-cyan-500 px-4 text-slate-950 font-medium py-2.5 hover:bg-cyan-400">Encrypt file</button>
+            <button id="btnDec" class="rounded-md bg-slate-800 px-4 font-medium py-2.5 hover:bg-slate-700">Decrypt file</button>
+          </div>
+        </div>
+        <div class="vault-panel space-y-3">
+          <h3>Emergency recovery and rebind</h3>
+          <p class="text-xs text-slate-400">Recovery is a separate exception. It needs this file's recovery key, with no camera, passphrase, or original browser profile. Rebind makes a new file and a new recovery key; the original file and its original key remain valid.</p>
+          <label class="block text-sm">File-specific recovery key
+            <input id="vaultRecoveryInput" type="password" autocomplete="off" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2">
+          </label>
+          <div class="vault-actions vault-actions-secondary">
+            <button id="btnVaultRecover" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm">Recover plaintext</button>
+            <button id="btnVaultRebind" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm">Rebind encrypted file to this profile</button>
+          </div>
+        </div>
+        <div id="vaultPending" class="hidden vault-panel space-y-3 border-cyan-700">
+          <h3 class="font-medium">Save this file's recovery key before downloading the encrypted file</h3>
+          <p id="vaultPendingFilename" class="text-sm text-cyan-200 break-all"></p>
+          <p class="text-xs text-amber-200">This key is shown once for this file. Losing it together with normal Vault access makes this file unrecoverable. A rebound file receives a new, independent recovery key.</p>
+          <pre id="vaultRecoveryCode" class="whitespace-pre-wrap break-all rounded bg-slate-950 p-3 text-sm" aria-label="File-specific recovery key"></pre>
+          <div class="vault-actions vault-actions-secondary">
+            <button id="btnVaultCopyRecovery" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm">Copy recovery key</button>
+            <button id="btnVaultDownloadRecovery" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm">Download recovery-key backup</button>
+          </div>
+          <label class="flex gap-2 items-start text-sm"><input id="vaultRecoverySaved" type="checkbox" class="mt-1"><span>I saved this file's recovery key.</span></label>
+          <div class="vault-actions vault-actions-secondary">
+            <button id="btnVaultDownloadPending" type="button" class="rounded-md bg-cyan-500 px-3 py-2 text-sm font-medium text-slate-950" disabled>Download encrypted file</button>
+            <button id="btnVaultDiscardPending" type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm">Discard pending encrypted file</button>
+          </div>
+        </div>
+        <div id="status" class="text-sm rounded-md bg-slate-900 border border-slate-800 p-3 min-h-[3rem] whitespace-pre-wrap overflow-auto">Ready.</div>
       </div>
 
       <div id="paneTest" class="space-y-4 hidden">
-        <p class="text-sm text-slate-400">Capture a reference gesture, then run trials (same person, other people, wrong gestures). Export the log as CSV for your report.</p>
-        <div class="flex gap-2 items-center">
-          <input id="who" placeholder="Label (e.g. Gesture Name)" class="flex-1 rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-sm">
-          <button id="btnRef" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Set reference</button>
+        <h2 class="text-xl font-semibold">Gesture Calibration</h2>
+        <p class="text-sm text-slate-400">Capture a reference, then run trials. Study records retain earlier reference groups. Routine CSV and JSON exports contain outcomes, not signatures or feature measurements.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300" aria-label="Study metadata">
+          <label>Participant ID (anonymous)<input id="studyParticipant" value="P01" pattern="P[0-9]{2,3}" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"></label>
+          <label>Session ID<input id="studySession" value="S01" pattern="S[0-9]{2,3}" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"></label>
+          <label>Dataset split<select id="studySplit" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="pilot">Pilot/calibration</option><option value="heldout">Held-out evaluation</option></select></label>
+          <label>Intended pose<select id="studyPose" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="fist">Fist</option><option value="open_palm">Open palm</option><option value="three_finger">Three finger</option><option value="swag">SWAG</option></select></label>
+          <label>Trial relation<select id="studyRelation" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="genuine">Same person, same pose</option><option value="different_pose">Same person, different pose</option><option value="impostor">Other person, same pose</option><option value="ambiguous">Ambiguity probe</option></select></label>
+          <label>Scene condition<select id="studyScene" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="single">Single hand</option><option value="two_start">Two hands from start</option><option value="enter_early">Second hand enters early</option><option value="enter_mid">Second hand enters midway</option><option value="enter_late">Second hand enters late</option><option value="disappear">Hand disappears</option><option value="replace">Hand replaced</option></select></label>
+          <label>Observer-visible hands<select id="studyHands" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="one">One</option><option value="zero">Zero</option><option value="two_plus">Two or more</option><option value="unknown">Unknown</option></select></label>
+          <label>Attempt kind<select id="studyAttemptKind" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="new">New scheduled attempt (index 1)</option><option value="retry">Retry immediately previous compatible attempt</option></select></label>
+          <label>Browser<select id="studyBrowser" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="chrome_current">Current Chrome</option><option value="other">Other</option></select></label>
+          <label>Camera<select id="studyCamera" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="built_in">Built-in</option><option value="external">External</option></select></label>
+          <label>Lighting<select id="studyLighting" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="normal">Normal</option><option value="low">Low</option><option value="backlit">Backlit</option></select></label>
+          <label>Protocol status<select id="studyProtocol" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"><option value="valid">Valid</option><option value="protocol_invalid">Protocol invalid</option><option value="missing">Observation missing</option></select></label>
+          <label>Planned physical attempts in selected split (include references and retries; each produces three CSV rows)<input id="studyPlanned" type="number" min="0" value="0" class="mt-1 w-full rounded bg-slate-900 border border-slate-700 p-2"></label>
+        </div>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <button id="btnPlan" class="rounded bg-slate-800 px-3 py-2">Set planned count</button>
+          <label>Reviewed pilot study ID for a fresh held-out tab<input id="studyPilotSource" placeholder="STUDY-XXXXXXXX" class="mt-1 rounded bg-slate-900 border border-slate-700 p-2"></label>
+          <select id="studyFreezeConfig" aria-label="Pilot-selected configuration" class="rounded bg-slate-900 border border-slate-700 px-2"><option value="baseline">Baseline 0.04 / 2°</option><option value="loose">Loose 0.02 / 1°</option><option value="strict">Strict 0.06 / 3°</option></select>
+          <button id="btnFreeze" class="rounded bg-slate-800 px-3 py-2">Freeze pilot choice</button>
+        </div>
+        <div id="studyStatus" role="status" aria-live="polite" class="text-xs text-slate-400">Study recovery status loading.</div>
+        <div id="studyRecovery" class="hidden rounded border border-amber-500 p-3 text-sm text-amber-200" role="alert">
+          <p id="studyRecoveryMessage"></p>
+          <button id="btnResumeStudy" class="mt-2 rounded bg-amber-700 px-3 py-2">Confirm restored study and resume</button>
+        </div>
+        <div class="flex flex-wrap gap-2 items-center">
+          <button id="btnRef" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Start/replace reference</button>
           <button id="btnTrial" class="rounded-md bg-cyan-500 text-slate-950 px-3 py-2 text-sm font-medium hover:bg-cyan-400">Run trial</button>
         </div>
         <div id="stats" class="text-sm text-slate-300">No reference yet.</div>
-        <div class="max-h-64 overflow-auto border border-slate-800 rounded-lg">
-          <table class="w-full text-xs">
-            <thead class="bg-slate-900 text-slate-400"><tr><th class="p-2 text-left">#</th><th class="p-2 text-left">Label</th><th class="p-2 text-left">Signature</th><th class="p-2 text-left">Result</th></tr></thead>
+        <p class="mobile-scroll-hint text-xs text-slate-400">Swipe the attempt table to view all columns.</p>
+        <div class="max-h-64 overflow-auto border border-slate-800 rounded-lg" tabindex="0" role="region" aria-label="Study attempt table; scroll horizontally for all columns">
+          <table class="w-full min-w-[32rem] text-xs">
+            <thead class="bg-slate-900 text-slate-400"><tr><th class="p-2 text-left">Attempt</th><th class="p-2 text-left">Role / pose</th><th class="p-2 text-left">Signature</th><th class="p-2 text-left">Outcome</th></tr></thead>
             <tbody id="log"></tbody>
           </table>
         </div>
-        <div class="flex gap-2">
-          <button id="btnCsv" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Export CSV</button>
-          <button id="btnClear" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Clear log</button>
+        <div class="flex flex-wrap gap-2">
+          <button id="btnCsv" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Export study CSV</button>
+          <button id="btnJson" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Export summary JSON</button>
+          <button id="btnExclude" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Exclude last attempt</button>
+          <button id="btnClear" class="rounded-md bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700">Clear display only</button>
+          <button id="btnEndStudy" class="rounded-md bg-rose-900 px-3 py-2 text-sm">End study and delete local recovery copy</button>
         </div>
+      </div>
+
+      <div id="paneLab" class="space-y-4 hidden">
+        <h2 class="text-xl font-semibold">Security Attack Lab</h2>
+        <p class="text-sm text-slate-400">Run local scenarios against newly generated synthetic encrypted files. The lab does not read your selected file, form credentials, or camera data. A camera started in Gesture Calibration may remain active after switching here. PASS means the expected result was observed, including successful recovery in the positive control; it is not a general security proof.</p>
+        <button id="btnLabRun" class="rounded-md bg-cyan-500 text-slate-950 px-4 py-2 font-medium hover:bg-cyan-400">Run attack scenarios</button>
+        <div id="labStatus" role="status" aria-live="polite" class="text-sm text-slate-300">Not run in this page session.</div>
+        <div id="labSummary" class="text-sm text-slate-300">No attack results yet.</div>
+        <div id="labResults" class="space-y-3"></div>
+        <p class="text-xs text-slate-400">Outside these ten scenarios: a genuine archived file from an earlier release, real-camera replay or identity, offline guessing cost, and full-size cross-browser performance remain untested. This lab does not establish biometric authentication or liveness.</p>
+      </div>
+
+      <div id="paneResults" class="space-y-5 hidden">
+        <div>
+          <h2 class="text-xl font-semibold">Evaluation Results</h2>
+          <p class="text-sm text-slate-400 mt-1">Exploratory pilot · STUDY-1873C987 · one participant, one session</p>
+        </div>
+        <p class="text-sm text-slate-300">The validated pilot recorded 31 physical attempts: 7 reference attempts and 24 genuine trials. Trial outcome, signature-acceptance, rejection and per-pose figures use the 24 genuine trials per configuration; match rates show their eligible denominators. Latency uses all 31 attempts, and reference acceptance uses 7 references per configuration. These are calibration observations, not held-out validation or biometric accuracy.</p>
+        <section id="pilotDashboard" class="pilot-dashboard space-y-4" aria-label="Interactive exploratory pilot dashboard">
+          <div class="pilot-toolbar">
+            <div>
+              <p class="pilot-kicker">Exploratory pilot · STUDY-1873C987</p>
+              <h3 class="mt-1 text-lg font-semibold">Gesture capture outcomes</h3>
+              <p class="text-xs text-slate-400">One participant · one session · 24 genuine trials and 7 references</p>
+            </div>
+            <label for="pilotConfig">View configuration
+              <select id="pilotConfig" aria-describedby="pilotConfigNote">
+                <option value="loose">Loose · 0.02 ratio / 1°</option>
+                <option value="baseline">Baseline · 0.04 ratio / 2°</option>
+                <option value="strict">Strict · 0.06 ratio / 3°</option>
+              </select>
+            </label>
+          </div>
+          <p id="pilotConfigNote" class="text-xs text-slate-400">This selector changes pilot visualizations only; it does not change production gesture settings or study records.</p>
+          <p id="pilotSelectionStatus" role="status" aria-live="polite" class="text-xs text-teal-200">Loading validated pilot analysis…</p>
+          <div id="pilotMetrics" class="pilot-metrics" aria-label="Selected configuration metrics"></div>
+          <div class="pilot-charts">
+            <section class="pilot-chart" aria-labelledby="pilotOutcomeTitle">
+              <h4 id="pilotOutcomeTitle">Genuine trial outcomes</h4>
+              <p class="pilot-chart-subtitle">Each bar represents 24 valid genuine trials; hover or focus a segment for exact counts.</p>
+              <div id="pilotOutcomes"></div>
+              <div class="pilot-legend" aria-label="Outcome colors">
+                <span style="--legend-color:#2dd4bf">Match</span>
+                <span style="--legend-color:#a78bfa">Mismatch</span>
+                <span style="--legend-color:#c67eaa">Rejected</span>
+                <span style="--legend-color:#67a8bd">Accepted without reference</span>
+              </div>
+              <p class="pilot-chart-note">“No reference” can overlap with rejection. Under strict margins, 17 of 19 rejected trials also lacked an accepted reference; 2 accepted trials had no reference. Rejections are never mismatches.</p>
+            </section>
+            <section class="pilot-chart" aria-labelledby="pilotRateTitle">
+              <h4 id="pilotRateTitle">Acceptance and exact-match rates</h4>
+              <p class="pilot-chart-subtitle">The selected configuration shows each rate with its own numerator and eligible denominator.</p>
+              <div id="pilotRates"></div>
+              <p class="pilot-chart-note">Strict's 3/3 conditional matches involve only three accepted trials with a reference; this is not evidence of superior accuracy.</p>
+            </section>
+          </div>
+          <section class="pilot-chart" aria-labelledby="pilotPoseTitle">
+            <h4 id="pilotPoseTitle">Outcomes by pose</h4>
+            <p class="pilot-chart-subtitle">Counts for the selected configuration; each pose has its own trial count.</p>
+            <div id="pilotPoses" class="mt-3"></div>
+          </section>
+          <details class="pilot-source-details pilot-methodology">
+            <summary>How this pilot was counted</summary>
+            <p class="text-xs text-slate-300">One participant completed 31 physical attempts in one session: 7 reference attempts and 24 genuine trials. The loose, baseline and strict rows re-evaluate the same captures; they are not additional attempts. Outcome, signature-acceptance and rejection counts use 24 genuine trials per configuration; conditional and end-to-end match rates use the eligible denominators shown beside each rate. Reference acceptance uses 7 references, and latency covers all 31 attempts. Rejected captures remain distinct from mismatches. These exploratory observations do not establish held-out or population-level performance.</p>
+          </details>
+        </section>
+        <details class="pilot-source-details">
+          <summary>Full validated numeric table</summary>
+        <p class="mobile-scroll-hint text-xs text-slate-400">Swipe the table and figures to see all columns and labels. Full-size figures are linked below.</p>
+        <div class="overflow-x-auto rounded-lg border border-slate-700" tabindex="0" role="region" aria-label="Exploratory pilot results table; scroll horizontally for all columns">
+          <table class="w-full min-w-[32rem] text-left text-xs">
+            <caption class="p-3 text-left font-medium text-slate-200">Exploratory pilot outcomes, with exact denominators</caption>
+            <thead class="bg-slate-800 text-slate-200"><tr><th class="p-2">Margins</th><th class="p-2">Signatures accepted</th><th class="p-2">Rejected</th><th class="p-2">Matches with reference</th><th class="p-2">References accepted</th></tr></thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              <tr><th scope="row" class="p-2 font-medium">Loose · 0.02 / 1°</th><td class="p-2">21/24</td><td class="p-2">3/24</td><td class="p-2">18/24</td><td class="p-2">7/7</td></tr>
+              <tr><th scope="row" class="p-2 font-medium">Baseline · 0.04 / 2°</th><td class="p-2">14/24</td><td class="p-2">10/24</td><td class="p-2">12/24</td><td class="p-2">5/7</td></tr>
+              <tr><th scope="row" class="p-2 font-medium">Strict · 0.06 / 3°</th><td class="p-2">5/24</td><td class="p-2">19/24</td><td class="p-2">3/5</td><td class="p-2">1/7</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-slate-400">“Matches with reference” uses valid genuine trials with an available reference; for strict margins, only 5 trials had one. No-reference and rejection can overlap. Rejected captures are not mismatches. No held-out data is shown here.</p>
+        </details>
+        <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+          <a class="text-cyan-300 underline underline-offset-2" href="./analysis-output/pilot-STUDY-1873C987/report.md">Validated pilot report</a>
+          <a class="text-cyan-300 underline underline-offset-2" href="./analysis-output/pilot-STUDY-1873C987/aggregate_metrics.csv">Aggregate metrics with denominators</a>
+        </div>
+        <details class="pilot-source-details">
+          <summary>Original pilot figures · six validated SVGs</summary>
+          <div class="pilot-figures space-y-4">
+          <h3 class="text-base font-semibold">Pilot figures</h3>
+          <figure class="rounded-lg border border-slate-700 bg-white p-2"><img class="w-full" loading="lazy" src="./analysis-output/pilot-STUDY-1873C987/pilot/01_configuration_outcomes.svg" alt="Exploratory pilot configuration outcomes for genuine trials, with counts by loose, baseline, and strict margins."><figcaption class="mt-2 text-xs text-slate-700">1. Configuration outcomes · 24 genuine trials per configuration · <a class="underline" href="./analysis-output/pilot-STUDY-1873C987/pilot/01_configuration_outcomes.svg" target="_blank" rel="noopener">Full-size SVG</a></figcaption></figure>
+          <figure class="rounded-lg border border-slate-700 bg-white p-2"><img class="w-full" loading="lazy" src="./analysis-output/pilot-STUDY-1873C987/pilot/02_rates.svg" alt="Exploratory pilot signature acceptance, conditional match, and end-to-end match rates with denominators."><figcaption class="mt-2 text-xs text-slate-700">2. Acceptance and match rates · denominators shown in figure · <a class="underline" href="./analysis-output/pilot-STUDY-1873C987/pilot/02_rates.svg" target="_blank" rel="noopener">Full-size SVG</a></figcaption></figure>
+          <figure class="rounded-lg border border-slate-700 bg-white p-2"><img class="w-full" loading="lazy" src="./analysis-output/pilot-STUDY-1873C987/pilot/03_per_pose.svg" alt="Exploratory pilot outcome counts for fist, open palm, three-finger, and SWAG gestures."><figcaption class="mt-2 text-xs text-slate-700">3. Outcomes by pose · 24 genuine trials across four poses · <a class="underline" href="./analysis-output/pilot-STUDY-1873C987/pilot/03_per_pose.svg" target="_blank" rel="noopener">Full-size SVG</a></figcaption></figure>
+          <figure class="rounded-lg border border-slate-700 bg-white p-2"><img class="w-full" loading="lazy" src="./analysis-output/pilot-STUDY-1873C987/pilot/04_rejection_reasons.svg" alt="Exploratory pilot rejection reasons by margin configuration, with counts."><figcaption class="mt-2 text-xs text-slate-700">4. Rejection reasons · 24 genuine trials per configuration; rejections remain distinct from mismatches · <a class="underline" href="./analysis-output/pilot-STUDY-1873C987/pilot/04_rejection_reasons.svg" target="_blank" rel="noopener">Full-size SVG</a></figcaption></figure>
+          <figure class="rounded-lg border border-slate-700 bg-white p-2"><img class="w-full" loading="lazy" src="./analysis-output/pilot-STUDY-1873C987/pilot/05_latency.svg" alt="Exploratory pilot attempt and capture latency distributions, including readiness waiting."><figcaption class="mt-2 text-xs text-slate-700">5. Latency · 31 physical attempts; capture time includes readiness waiting · <a class="underline" href="./analysis-output/pilot-STUDY-1873C987/pilot/05_latency.svg" target="_blank" rel="noopener">Full-size SVG</a></figcaption></figure>
+          <figure class="rounded-lg border border-slate-700 bg-white p-2"><img class="w-full" loading="lazy" src="./analysis-output/pilot-STUDY-1873C987/pilot/06_reference_acceptance.svg" alt="Exploratory pilot reference acceptance counts across seven reference attempts."><figcaption class="mt-2 text-xs text-slate-700">6. Reference acceptance · 7 reference attempts per configuration · <a class="underline" href="./analysis-output/pilot-STUDY-1873C987/pilot/06_reference_acceptance.svg" target="_blank" rel="noopener">Full-size SVG</a></figcaption></figure>
+          </div>
+        </details>
       </div>
     </section>
   </div>
 </main>
 
 <script type="module">
-import { HandLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
-
-/* ---------- Tunable settings ----------
-   Ratios are scale/rotation invariant. Use the live readout to tune thresholds for your own hand. */
-const CFG = {
-  FRAMES: 25,                 // frames captured per attempt
-  FINGER_T: [1.30, 1.70],     // index..pinky: tip-to-wrist / knuckle-to-wrist  (<t0 curled, <t1 half, else extended)
-  THUMB_T:  [1.15, 1.60],     // thumb tip to pinky knuckle / palm width
-  SPREAD_T: 12,               // degrees between adjacent extended fingers (<T together, >T apart)
-  MARGIN_R: 0.00,             // reject if a ratio is this close to a threshold (avoids flipping)
-  MARGIN_A: 0,                // same, for spread degrees
-  MAX_STD_R: 0.12,            // reject if a ratio varies more than this during capture
-  MAX_STD_A: 6,               // same, for spread degrees
-  KDF_ITER: 600000            // PBKDF2-HMAC-SHA256 iterations
-};
+import { CFG, stats, quantize } from "./gesture.mjs";
+import { encryptV2 } from "./vault-v2.mjs";
+import { decryptByVersion, detectFormat } from "./format-dispatch.mjs";
+import { StudyRecorder, StudyStore, STUDY_STORAGE_KEY } from "./study-persistence.mjs?study-snapshot-v1";
+import { CapturePolicy, CAPTURE_CONFIG } from "./capture.mjs";
+import { DecodedFrameSampler } from "./frame-sampler.mjs";
+import { FreshReadinessWait } from "./readiness-wait.mjs";
+import { sharedCameraOperations } from "./camera-operations.mjs";
+import { VaultGestureService, VaultGestureStore } from "./vault-gesture.mjs";
+import { createVaultCameraCapture } from "./vault-camera-adapter.mjs";
+import { V3DeviceStore } from "./vault-device-store.mjs";
+import { V3VaultUiController } from "./vault-ui.mjs";
+import { awaitStartup, waitForVideoMetadata } from "./camera-startup.mjs";
+import { runSecurityAttackLab, summarizeAttackLab } from "./security-lab.mjs";
+import { initPilotDashboard } from "./pilot-dashboard.mjs";
 
 const $ = id => document.getElementById(id);
+initPilotDashboard($("pilotDashboard"), "./analysis-output/pilot-STUDY-1873C987/analysis.json")
+  .catch(() => {
+    $("pilotConfig").disabled = true;
+    $("pilotSelectionStatus").textContent = "Interactive charts are unavailable. Use the validated table, report, and original figures below.";
+  });
 const video = $("video"), canvas = $("overlay"), ctx = canvas.getContext("2d");
-const enc = new TextEncoder(), dec = new TextDecoder();
 
-/* ---------- Camera + MediaPipe ---------- */
+/* Camera + MediaPipe */
 const CONN = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
-let landmarker, lastF = null, capture = null, lastTime = -1;
+let landmarker, cameraStream, frameSampler, capture = null, freshReadinessWait = null;
+let disposed = false, cameraStartPromise = null, cameraStartController = null, vaultUi = null;
+const STARTUP_TIMEOUT_MS = 30000;
+function startupOrCameraFailure(error) {
+  if (cameraStartController) cameraStartController.abort(error);
+  else cameraFailure(error);
+}
+const cameraTrackEnded = () => startupOrCameraFailure(new Error("Camera stream ended."));
+const videoFailed = () => startupOrCameraFailure(new Error("Camera video failed."));
+const stopTracks = stream => stream.getTracks().forEach(track => track.stop());
 
-async function init() {
+function stopCamera() {
+  cameraStartController?.abort(new Error("Camera initialization was cancelled."));
+  frameSampler?.stop();
+  frameSampler = null;
+  video.removeEventListener("error", videoFailed);
+  if (landmarker) { try { landmarker.close(); } catch {} }
+  landmarker = null;
+  cameraStream?.getVideoTracks().forEach(track => track.removeEventListener("ended", cameraTrackEnded));
+  if (cameraStream) stopTracks(cameraStream);
+  cameraStream = null;
+  video.srcObject = null;
+}
+
+function cameraFailure(error) {
+  freshReadinessWait?.cancel("Camera or hand model failed: " + error.message, 'camera_error');
+  stopCamera();
+  const cameraMessage = $("camMsg");
+  if (cameraMessage) {
+    cameraMessage.classList.remove("hidden");
+    cameraMessage.textContent = "Camera or model failed: " + error.message + " (serve over localhost or 127.0.0.1, allow camera access)";
+  }
+  $("readout").textContent = "Camera or hand model failed: " + error.message;
+  showCaptureEvent(capturePolicy.cameraError());
+}
+
+async function init(externalSignal) {
+  const controller = new AbortController();
+  const cancelStartup = () => controller.abort(externalSignal.reason || new Error("Camera initialization was cancelled."));
+  externalSignal?.addEventListener("abort", cancelStartup, { once: true });
+  if (externalSignal?.aborted) cancelStartup();
+  cameraStartController = controller;
+  const timer = setTimeout(() => controller.abort(new Error("Camera initialization timed out. Try again.")), STARTUP_TIMEOUT_MS);
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
-    video.srcObject = stream;
-    await new Promise(r => video.onloadedmetadata = r);
+    $("camMsg").classList.remove("hidden");
+    $("camMsg").textContent = "Starting camera…";
+    cameraStream = await awaitStartup(navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false }), controller.signal, stopTracks);
+    cameraStream.getVideoTracks().forEach(track => track.addEventListener("ended", cameraTrackEnded));
+    video.addEventListener("error", videoFailed);
+    video.srcObject = cameraStream;
+    await waitForVideoMetadata(video, controller.signal);
     canvas.width = video.videoWidth; canvas.height = video.videoHeight;
     $("camMsg").textContent = "Loading hand model…";
-    const vision = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm");
-    landmarker = await HandLandmarker.createFromOptions(vision, {
+    const { HandLandmarker, FilesetResolver } = await awaitStartup(import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14"), controller.signal);
+    const vision = await awaitStartup(FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"), controller.signal);
+    landmarker = await awaitStartup(HandLandmarker.createFromOptions(vision, {
       baseOptions: { modelAssetPath: "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task", delegate: "GPU" },
-      runningMode: "VIDEO", numHands: 1
-    });
-    $("camMsg").remove();
-    loop();
+      runningMode: "VIDEO", numHands: 2
+    }), controller.signal, model => model.close());
+    if (controller.signal.aborted) throw controller.signal.reason;
+    $("camMsg").classList.add("hidden");
+    frameSampler = new DecodedFrameSampler(video, { onFrame: processCameraFrame, onError: cameraFailure });
+    frameSampler.start();
   } catch (e) {
-    $("camMsg").textContent = "Camera or model failed: " + e.message + " (serve over http://localhost, allow camera access)";
+    if (!disposed) cameraFailure(e);
+    else stopCamera();
+    throw e;
+  } finally {
+    clearTimeout(timer);
+    externalSignal?.removeEventListener("abort", cancelStartup);
+    if (cameraStartController === controller) cameraStartController = null;
   }
 }
 
-function loop() {
-  if (video.currentTime !== lastTime) {
-    lastTime = video.currentTime;
-    const res = landmarker.detectForVideo(video, performance.now());
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const nl = res.landmarks && res.landmarks[0];
-    const wl = res.worldLandmarks && res.worldLandmarks[0];
-    if (nl && wl) {
-      ctx.strokeStyle = "#22d3ee"; ctx.lineWidth = 2; ctx.fillStyle = "#f8fafc";
-      for (const [a, b] of CONN) { ctx.beginPath(); ctx.moveTo(nl[a].x * canvas.width, nl[a].y * canvas.height); ctx.lineTo(nl[b].x * canvas.width, nl[b].y * canvas.height); ctx.stroke(); }
-      for (const p of nl) { ctx.beginPath(); ctx.arc(p.x * canvas.width, p.y * canvas.height, 3, 0, 7); ctx.fill(); }
-      lastF = features(wl);
-      if (capture) capture.frames.push(lastF);
-      $("readout").textContent = Object.entries(lastF).map(([k, v]) => k.padEnd(7) + v.toFixed(2)).join("\n");
-    } else {
-      lastF = null; if (capture) capture.frames = [];
-      $("readout").textContent = "No hand detected";
-    }
-  }
-  requestAnimationFrame(loop);
+function ensureCamera({ signal } = {}) {
+  if (disposed) return Promise.reject(new Error("Page is closing."));
+  if (signal?.aborted) return Promise.reject(signal.reason || new Error("Camera initialization was cancelled."));
+  if (landmarker && frameSampler?.running) return Promise.resolve();
+  if (!cameraStartPromise) cameraStartPromise = init(signal).finally(() => { cameraStartPromise = null; });
+  return signal ? awaitStartup(cameraStartPromise, signal) : cameraStartPromise;
 }
 
-/* ---------- Feature extraction (world landmarks, so scale/rotation robust) ---------- */
+function processCameraFrame(frameId) {
+  const res = landmarker.detectForVideo(video, performance.now());
+  const observedAt = performance.now();
+  const event = capturePolicy.observe(res, frameId, observedAt);
+  freshReadinessWait?.observe(event, observedAt);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (event.hand) {
+    const nl = event.hand.image;
+    ctx.strokeStyle = "#22d3ee"; ctx.lineWidth = 2; ctx.fillStyle = "#f8fafc";
+    for (const [a, b] of CONN) { ctx.beginPath(); ctx.moveTo(nl[a].x * canvas.width, nl[a].y * canvas.height); ctx.lineTo(nl[b].x * canvas.width, nl[b].y * canvas.height); ctx.stroke(); }
+    for (const p of nl) { ctx.beginPath(); ctx.arc(p.x * canvas.width, p.y * canvas.height, 3, 0, 7); ctx.fill(); }
+    $("readout").textContent = Object.entries(event.features).map(([k, v]) => k.padEnd(7) + v.toFixed(2)).join("\n");
+  } else $("readout").textContent = event.message;
+  showCaptureEvent(event);
+}
+
+window.addEventListener("pagehide", () => {
+  disposed = true;
+  vaultUi?.dispose();
+  releaseDownloadUrls();
+  finalizeStudyOnPageExit();
+  freshReadinessWait?.cancel("Page is closing.", 'interrupted');
+  stopCamera();
+  if (capture) showCaptureEvent(capturePolicy.cameraError());
+});
+window.addEventListener("pageshow", event => {
+  if (event.persisted && disposed) window.location.reload();
+});
+
+/* Feature extraction (world landmarks, so scale/rotation robust) */
 const d = (a, b) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
 const vec = (lm, m, t) => ({ x: lm[t].x - lm[m].x, y: lm[t].y - lm[m].y, z: lm[t].z - lm[m].z });
 function angle(u, v) {
@@ -163,171 +547,441 @@ function features(lm) {
   };
 }
 
-/* ---------- Capture + quantization ---------- */
-function capturePose() {
+/* Capture + quantization */
+const capturePolicy = new CapturePolicy({ extractFeatures: features, config: { CAPTURE_FRAMES: CFG.FRAMES } });
+
+function showCaptureEvent(event) {
+  const message = $("captureStatus");
+  if (message.textContent !== event.message) message.textContent = event.message;
+  $("bar").style.width = event.state === "CAPTURING" ? (event.progress / CFG.FRAMES * 100) + "%" : event.state === "ACCEPTED" ? "100%" : "0%";
+  if (!capture || (event.state !== "ACCEPTED" && event.state !== "REJECTED")) return;
+  const pending = capture;
+  capture = null;
+  clearTimeout(pending.timer);
+  pending.signal?.removeEventListener("abort", pending.onAbort);
+  if (event.state === "ACCEPTED") pending.resolve(event.frames);
+  else {
+    const error = new Error(event.message);
+    error.code = event.code;
+    pending.reject(error);
+  }
+}
+
+function capturePose({ legacy = false, signal } = {}) {
+  if (signal?.aborted) return Promise.reject(signal.reason || new Error("Gesture capture was cancelled."));
+  if (capture) return Promise.reject(new Error("A gesture capture is already in progress."));
+  if (!landmarker || !frameSampler?.running) return Promise.reject(new Error("Camera or hand model is not ready."));
+  const event = capturePolicy.start(performance.now(), { legacy });
+  showCaptureEvent(event);
+  if (event.state !== "CAPTURING") {
+    const error = new Error(event.message);
+    error.code = event.code;
+    return Promise.reject(error);
+  }
   return new Promise((resolve, reject) => {
-    capture = { frames: [] };
-    const start = performance.now();
-    const iv = setInterval(() => {
-      $("bar").style.width = Math.min(100, capture.frames.length / CFG.FRAMES * 100) + "%";
-      if (capture.frames.length >= CFG.FRAMES) { clearInterval(iv); const f = capture.frames; capture = null; resolve(f); }
-      else if (performance.now() - start > 10000) { clearInterval(iv); capture = null; reject(new Error("Could not see a steady hand. Keep your hand in view and hold still.")); }
-    }, 50);
+    const pending = { resolve, reject, signal, onAbort: null, timer: null };
+    pending.onAbort = () => {
+      if (capture === pending) showCaptureEvent(capturePolicy.reject(
+        signal?.reason?.code || "cancelled", signal?.reason?.message || "Gesture capture cancelled."));
+    };
+    capture = pending;
+    signal?.addEventListener("abort", pending.onAbort, { once: true });
+    pending.timer = setTimeout(() => showCaptureEvent(capturePolicy.timeout()), CAPTURE_CONFIG.TIMEOUT_MS);
+    if (signal?.aborted) pending.onAbort();
   });
 }
 
-function stats(frames) {
-  const med = {}, sd = {};
-  for (const k of Object.keys(frames[0])) {
-    const a = frames.map(f => f[k]).sort((x, y) => x - y);
-    med[k] = a[a.length >> 1];
-    const m = a.reduce((s, v) => s + v, 0) / a.length;
-    sd[k] = Math.sqrt(a.reduce((s, v) => s + (v - m) ** 2, 0) / a.length);
+async function waitForFreshReadiness({ signal } = {}) {
+  if (signal?.aborted) throw signal.reason || new Error("Gesture capture was cancelled.");
+  const gate = new FreshReadinessWait({ afterMs: performance.now(),
+    maxAgeMs: CAPTURE_CONFIG.MAX_FRAME_AGE_MS, timeoutMs: CAPTURE_CONFIG.TIMEOUT_MS });
+  freshReadinessWait = gate;
+  $("captureStatus").textContent = "Waiting for fresh single-hand camera readiness.";
+  const cancelReadiness = () => gate.cancel(signal?.reason?.message || "Gesture capture cancelled.",
+    signal?.reason?.code || "cancelled");
+  signal?.addEventListener("abort", cancelReadiness, { once: true });
+  try {
+    const pending = gate.wait();
+    if (signal?.aborted) cancelReadiness();
+    await pending;
+  } finally {
+    signal?.removeEventListener("abort", cancelReadiness);
+    if (freshReadinessWait === gate) freshReadinessWait = null;
   }
-  return { med, sd };
 }
 
-function quantize({ med, sd }) {
-  const out = [], lvl = {};
-  const fingers = [["thumb", CFG.THUMB_T, "T"], ["index", CFG.FINGER_T, "I"], ["middle", CFG.FINGER_T, "M"], ["ring", CFG.FINGER_T, "R"], ["pinky", CFG.FINGER_T, "P"]];
-  for (const [k, t, c] of fingers) {
-    if (sd[k] > CFG.MAX_STD_R) return { ok: false, reason: `Hold steady: ${k} is moving too much.` };
-    const v = med[k];
-    if (Math.abs(v - t[0]) < CFG.MARGIN_R || Math.abs(v - t[1]) < CFG.MARGIN_R) return { ok: false, reason: `The ${k} finger is between positions. Curl or extend it more clearly.` };
-    lvl[k] = v < t[0] ? 0 : v < t[1] ? 1 : 2;
-    out.push(c + lvl[k]);
-  }
-  // spread only counts when both neighbouring fingers are fully extended; otherwise it is noise
-  for (const [k, a, b, c] of [["sp_im", "index", "middle", "a"], ["sp_mr", "middle", "ring", "b"], ["sp_rp", "ring", "pinky", "c"]]) {
-    if (lvl[a] === 2 && lvl[b] === 2) {
-      if (sd[k] > CFG.MAX_STD_A) return { ok: false, reason: "Hold steady: finger spread is changing." };
-      if (Math.abs(med[k] - CFG.SPREAD_T) < CFG.MARGIN_A) return { ok: false, reason: "Finger spread is ambiguous. Spread them wider or hold them together." };
-      out.push(c + (med[k] > CFG.SPREAD_T ? 1 : 0));
-    } else out.push(c + "x");
-  }
-  return { ok: true, sig: "GC1:" + out.join("-") };
-}
-
-async function getSignature() {
+async function getSignature({ legacy = false, testDiagnostic = false, evaluation = false } = {}) {
   $("bar").style.width = "0%";
-  const frames = await capturePose();
+  const frames = await capturePose({ legacy });
   $("bar").style.width = "100%";
-  return quantize(stats(frames));
+  const summary = stats(frames);
+  const result = quantize(summary, { legacy });
+  if (testDiagnostic && new URLSearchParams(location.search).get("gestureDebug") === "1") {
+    try {
+      const { reportTestCapture } = await import("./diagnostics.mjs");
+      reportTestCapture(summary, result);
+    } catch { /* Diagnostic failures must not affect capture results. */ }
+  }
+  return evaluation ? { ...result, summary } : result;
 }
 
-/* ---------- Crypto: PBKDF2 -> AES-256-GCM ---------- */
-const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
-const sha256 = async buf => hex(await crypto.subtle.digest("SHA-256", buf));
+// Prepared for the V3 Vault UI. Construction does not open IndexedDB or start the camera.
+const vaultGestureService = new VaultGestureService({
+  store: new VaultGestureStore(),
+  captureFrames: createVaultCameraCapture({ ensureCamera, waitForFreshReadiness, capturePose })
+});
 
-async function deriveKey(sig, pin, salt) {
-  const material = await crypto.subtle.importKey("raw", enc.encode(sig + "|" + pin), "PBKDF2", false, ["deriveKey"]);
-  return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: CFG.KDF_ITER, hash: "SHA-256" }, material, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+const activeDownloadUrls = new Set();
+function releaseDownloadUrl(url) {
+  if (!activeDownloadUrls.delete(url)) return;
+  URL.revokeObjectURL(url);
 }
-
-// File layout: "GCRY" | version(1) | salt(16) | iv(12) | nameLen(2) | name | ciphertext+tag. Header is bound as GCM AAD.
-async function encryptFile(file, sig, pin) {
-  const plain = await file.arrayBuffer();
-  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
-  const name = enc.encode(file.name);
-  const header = new Uint8Array(5 + 16 + 12 + 2 + name.length);
-  header.set(enc.encode("GCRY"), 0); header[4] = 1; header.set(salt, 5); header.set(iv, 21);
-  new DataView(header.buffer).setUint16(33, name.length); header.set(name, 35);
-  const t0 = performance.now();
-  const key = await deriveKey(sig, pin, salt);
-  const t1 = performance.now();
-  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv, additionalData: header }, key, plain));
-  const t2 = performance.now();
-  const out = new Uint8Array(header.length + ct.length); out.set(header); out.set(ct, header.length);
-  return { blob: new Blob([out]), hash: await sha256(plain), kdfMs: t1 - t0, aesMs: t2 - t1 };
+function releaseDownloadUrls() {
+  for (const url of activeDownloadUrls) releaseDownloadUrl(url);
 }
-
-async function decryptFile(file, sig, pin) {
-  const data = new Uint8Array(await file.arrayBuffer());
-  if (data.length < 35 || dec.decode(data.slice(0, 4)) !== "GCRY") throw new Error("Not a GestCrypt file.");
-  const salt = data.slice(5, 21), iv = data.slice(21, 33);
-  const nl = new DataView(data.buffer).getUint16(33);
-  const hLen = 35 + nl, header = data.slice(0, hLen);
-  const name = dec.decode(data.slice(35, hLen));
-  const t0 = performance.now();
-  const key = await deriveKey(sig, pin, salt);
-  const t1 = performance.now();
-  let plain;
-  try { plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv, additionalData: header }, key, data.slice(hLen)); }
-  catch { throw new Error("Decryption failed: wrong gesture or PIN, or the file was modified."); }
-  const t2 = performance.now();
-  return { blob: new Blob([plain]), name, hash: await sha256(plain), kdfMs: t1 - t0, aesMs: t2 - t1 };
-}
-
 function download(blob, name) {
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  const url = URL.createObjectURL(blob);
+  activeDownloadUrls.add(url);
+  try {
+    const a = document.createElement("a");
+    a.href = url; a.download = name; a.click();
+  } catch (error) { releaseDownloadUrl(url); throw error; }
+  setTimeout(() => releaseDownloadUrl(url), 5000);
 }
 
-/* ---------- UI: encrypt / decrypt ---------- */
+/* UI: encrypt / decrypt */
 const status = m => $("status").textContent = m;
-const busy = on => ["btnEnc", "btnDec", "btnRef", "btnTrial"].forEach(i => $(i).disabled = on);
+let studyLocked = true, studyBusy = false, activeSection = "Main";
+const sectionNames = ["Main", "Test", "Lab", "Results"];
+const studyButtons = ["btnRef", "btnTrial", "btnPlan", "btnFreeze", "btnExclude", "btnClear"];
+function updateStudyControls() {
+  for (const id of studyButtons) $(id).disabled = studyLocked || studyBusy;
+  $("btnEndStudy").disabled = studyBusy || !!storageError;
+  const canExport = !!study && Number.isSafeInteger(store?.revision) && store.revision >= 1 &&
+    !studyLocked && !studyBusy && !recoveryPending && !storageError;
+  $("btnCsv").disabled = !canExport;
+  $("btnJson").disabled = !canExport;
+  for (const name of sectionNames) $("tab" + name).disabled = studyBusy && name !== activeSection;
+  $("navStatus").textContent = studyBusy ? "Finish the current operation before switching sections." : "";
+}
+const busy = on => {
+  studyBusy = on;
+  for (const id of ["btnEnc", "btnDec", "btnLabRun"]) $(id).disabled = on;
+  updateStudyControls();
+  vaultUi?.updateControls();
+};
 
 async function run(mode) {
   const file = $("file").files[0];
   if (!file) return status("Choose a file first.");
   busy(true);
   try {
-    status("Hold your gesture steady…");
-    const r = await getSignature();
-    if (!r.ok) return status(r.reason);
-    status("Gesture captured. Deriving key…");
-    const pin = $("pin").value;
     if (mode === "enc") {
-      const o = await encryptFile(file, r.sig, pin);
+      const passphrase = $("passphrase").value;
+      if (passphrase !== $("passphraseConfirm").value) throw new Error("Passphrase confirmation does not match.");
+      status("Deriving key and encrypting…");
+      const o = await encryptV2(file, passphrase);
       download(o.blob, file.name + ".gcry");
       status(`Encrypted ${file.name}\nSHA-256 of original: ${o.hash}\nKey derivation ${o.kdfMs.toFixed(0)} ms, AES-GCM ${o.aesMs.toFixed(1)} ms`);
     } else {
-      const o = await decryptFile(file, r.sig, pin);
+      const version = await detectFormat(file);
+      if (version === 1) status("Hold your gesture steady…");
+      else status("Decrypting encrypted file…");
+      const o = await decryptByVersion(file, { passphrase: $("passphrase").value,
+        getLegacyCredentials: async () => {
+          await ensureCamera();
+          const r = await getSignature({ legacy: true });
+          if (!r.ok) throw new Error(r.reason);
+          return { sig: r.sig, pin: $("pin").value };
+        } });
       download(o.blob, o.name);
       status(`Decrypted ${o.name}\nSHA-256 of result: ${o.hash}\nKey derivation ${o.kdfMs.toFixed(0)} ms, AES-GCM ${o.aesMs.toFixed(1)} ms`);
     }
   } catch (e) { status(e.message); }
-  finally { busy(false); $("bar").style.width = "0%"; }
+  finally {
+    $("passphrase").value = "";
+    $("passphraseConfirm").value = "";
+    $("pin").value = "";
+    busy(false); $("bar").style.width = "0%";
+  }
 }
-$("btnEnc").onclick = () => run("enc");
-$("btnDec").onclick = () => run("dec");
+// Keep the historical V1/V2 handler available to its regression tests, but
+// never bind it as a user-facing Vault action.
+$("btnEnc").onclick = () => status("Vault is not ready.");
+$("btnDec").onclick = () => status("Vault is not ready.");
+vaultUi = new V3VaultUiController({ get: $, gestureService: vaultGestureService,
+  deviceStore: new V3DeviceStore(), download, onBusy: busy, canStart: () => !studyBusy });
+vaultUi.bind();
 
-/* ---------- UI: test mode ---------- */
+/* UI: test mode */
+let store, study, recoveryPending = false, storageError = null;
 let ref = null, rows = [];
+const studyStatus = message => $("studyStatus").textContent = message;
+const STUDY_TAB_MARKER = "gestcrypt.study.tab-id.v1";
+function lockStudy(error) {
+  storageError = error;
+  studyLocked = true;
+  updateStudyControls();
+  studyStatus("Study collection and export stopped: " + error.message + " Keep this tab open; do not continue.");
+}
+function persistStudy() {
+  try { store.save(study); } catch (error) { lockStudy(error); throw error; }
+}
+function finalizeStudyOnPageExit() {
+  if (!study || studyLocked || !study.interruptPending()) return;
+  try { persistStudy(); } catch { /* The study is locked; the last successful snapshot remains untouched. */ }
+}
+function restoredDisplayRows() {
+  return study.attempts.map(attempt => {
+    const result = attempt.results?.get("baseline");
+    const label = attempt.pose_id;
+    const display = attempt.protocol_status !== "valid" ? `EXCLUDED: ${attempt.protocol_status}` :
+      result?.rejection_code ? `REJECTED: ${result.rejection_code}` :
+      result?.comparison_status === "reference" ? "REFERENCE ACCEPTED" :
+      result?.comparison_status === "match" ? "MATCH" :
+      result?.comparison_status === "mismatch" ? "MISMATCH" : "NO REFERENCE";
+    return { attemptId: attempt.attempt_id, role: attempt.role, retryIndex: attempt.retry_index,
+      label, sig: "", result: display };
+  });
+}
+try {
+  store = new StudyStore(window.localStorage);
+  study = store.read();
+  const tabStudyId = window.sessionStorage.getItem(STUDY_TAB_MARKER);
+  if (tabStudyId && study?.studyId !== tabStudyId) {
+    throw new Error("This tab's saved study is missing or has a different ID. No new study was started.");
+  }
+  if (study) {
+    window.sessionStorage.setItem(STUDY_TAB_MARKER, study.studyId);
+    recoveryPending = true;
+    const interrupted = study.interruptPending();
+    ref = study.activeReferences.get("baseline")?.sig ?? null;
+    rows = restoredDisplayRows();
+    $("studyRecovery").classList.remove("hidden");
+    $("studyRecoveryMessage").textContent = `Restored ${study.studyId} with ${study.attempts.length} recorded attempts${interrupted ? "; the in-progress attempt is marked interrupted" : ""}. Review the ID and records, then confirm before collection resumes. This does not recover any attempts lost before persistence was installed.`;
+    studyStatus(`Restored study ${study.studyId}. Collection is paused until confirmation.`);
+  } else {
+    study = new StudyRecorder();
+    store.save(study);
+    window.sessionStorage.setItem(STUDY_TAB_MARKER, study.studyId);
+    studyLocked = false;
+    studyStatus(`New study ${study.studyId}. Local recovery is active; export after each block.`);
+  }
+} catch (error) {
+  study ??= new StudyRecorder();
+  lockStudy(error);
+  $("studyRecovery").classList.remove("hidden");
+  $("studyRecoveryMessage").textContent = `Saved study could not be opened: ${error.message} Its browser storage was not changed. Do not collect more attempts in this tab.`;
+  $("btnResumeStudy").hidden = true;
+}
+updateStudyControls();
+renderLog();
+$("btnResumeStudy").onclick = () => {
+  if (!recoveryPending) return;
+  try {
+    persistStudy();
+    recoveryPending = false;
+    studyLocked = false;
+    $("studyRecovery").classList.add("hidden");
+    $("studyPlanned").value = study.planned.heldout || study.planned.pilot;
+    $("studySplit").value = study.frozenConfigId ? "heldout" : "pilot";
+    $("studyPilotSource").value = study.pilotSourceStudyId ?? "";
+    $("studyFreezeConfig").value = study.frozenConfigId ?? "baseline";
+    const last = study.attempts.at(-1);
+    if (last) { $("studyParticipant").value = last.participant_id; $("studySession").value = last.session_id; }
+    updateStudyControls();
+    studyStatus(`Restored ${study.studyId}; ${study.attempts.length} attempts retained. Verify metadata and export a checkpoint before continuing.`);
+    renderLog();
+  } catch { /* persistStudy reports the storage failure. */ }
+};
+$("btnEndStudy").onclick = () => {
+  if (!store || !study || storageError ||
+      !confirm(`End ${study.studyId} and permanently delete its local recovery copy? Export CSV and JSON first. This cannot be undone.`)) return;
+  try {
+    store.clear(study.studyId);
+    study = new StudyRecorder();
+    store.save(study);
+    window.sessionStorage.setItem(STUDY_TAB_MARKER, study.studyId);
+    ref = null; rows = []; recoveryPending = false; studyLocked = false;
+    $("studyRecovery").classList.add("hidden");
+    updateStudyControls(); renderLog();
+    $("studySplit").value = "pilot";
+    $("studyPlanned").value = "0";
+    $("studyPilotSource").value = "";
+    $("studyFreezeConfig").value = "baseline";
+    studyStatus(`Previous study ended. New study ID: ${study.studyId}. Set the plan and freeze choice again before collecting.`);
+  } catch (error) { lockStudy(error); }
+};
+function studyMeta(isRef) {
+  return {
+    participantId: $("studyParticipant").value, sessionId: $("studySession").value,
+    split: $("studySplit").value, role: isRef ? "reference" : "trial",
+    poseId: $("studyPose").value, relation: isRef ? "reference" : $("studyRelation").value,
+    sceneCondition: $("studyScene").value, observedHands: $("studyHands").value,
+    retry: $("studyAttemptKind").value === "retry", browserCode: $("studyBrowser").value,
+    cameraCode: $("studyCamera").value, lightingCode: $("studyLighting").value
+  };
+}
 function renderLog() {
-  $("log").innerHTML = rows.map((r, i) => `<tr class="border-t border-slate-800"><td class="p-2">${i + 1}</td><td class="p-2">${r.label}</td><td class="p-2 font-mono">${r.sig || "-"}</td><td class="p-2 ${r.result === "MATCH" ? "text-emerald-400" : "text-amber-400"}">${r.result}</td></tr>`).join("");
-  const t = rows.filter(r => r.result !== "REFERENCE");
+  const body = $("log");
+  body.replaceChildren();
+  rows.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.className = "border-t border-slate-800";
+    for (const [value, className] of [[r.attemptId, "p-2"], [r.role + " / " + r.label + " (retry " + r.retryIndex + ")", "p-2"], [r.sig || "-", "p-2 font-mono"], [r.result, "p-2 " + (r.result === "MATCH" || r.result === "REFERENCE ACCEPTED" ? "text-emerald-400" : "text-amber-400")]]) {
+      const td = document.createElement("td");
+      td.className = className;
+      td.textContent = String(value);
+      tr.append(td);
+    }
+    body.append(tr);
+  });
+  const t = rows.filter(r => r.role === "trial");
   const m = t.filter(r => r.result === "MATCH").length;
-  $("stats").textContent = ref ? `Reference: ${ref}\nTrials: ${t.length}, matches: ${m}, mismatches: ${t.filter(r => r.result === "MISMATCH").length}, rejected as ambiguous/unsteady: ${t.filter(r => r.result.startsWith("REJECTED")).length}` : "No reference yet.";
+  $("stats").textContent = `Recorded physical attempts: ${study.attempts.length}; displayed trials: ${t.length}, matches: ${m}, mismatches: ${t.filter(r => r.result === "MISMATCH").length}, rejected: ${t.filter(r => r.result.startsWith("REJECTED")).length}; displayed reference rejections: ${rows.filter(r => r.role === "reference" && r.result.startsWith("REJECTED")).length}. Current baseline reference: ${ref || "none"}.`;
   $("stats").style.whiteSpace = "pre-line";
 }
 async function trial(isRef) {
+  let releaseCamera;
+  try { releaseCamera = sharedCameraOperations.acquire("study"); }
+  catch (error) { studyStatus(error.message); return; }
   busy(true);
-  const label = $("who").value || "-";
+  let attemptId = null, captureAt = null;
+  const label = $("studyPose").value;
+  const protocolStatus = $("studyProtocol").value;
   try {
-    const r = await getSignature();
-    if (!r.ok) rows.push({ label, sig: "", result: "REJECTED: " + r.reason });
-    else if (isRef) { ref = r.sig; rows.push({ label, sig: r.sig, result: "REFERENCE" }); }
-    else if (!ref) rows.push({ label, sig: r.sig, result: "REJECTED: no reference set" });
-    else rows.push({ label, sig: r.sig, result: r.sig === ref ? "MATCH" : "MISMATCH" });
-  } catch (e) { rows.push({ label, sig: "", result: "REJECTED: " + e.message }); }
-  busy(false); $("bar").style.width = "0%"; renderLog();
+    const meta = studyMeta(isRef);
+    if (isRef && study.currentReferenceId && !meta.retry &&
+        !confirm("Start a new reference group? The current reference will be replaced for future trials; prior records remain in the export.")) return;
+    attemptId = study.begin(meta, performance.now());
+    persistStudy();
+    if (isRef) ref = null;
+    await ensureCamera();
+    captureAt = performance.now();
+    await waitForFreshReadiness();
+    const r = await getSignature({ testDiagnostic: true, evaluation: true });
+    study.finish(attemptId, { summary: r.summary, captureMs: performance.now() - captureAt,
+      protocolStatus });
+    persistStudy();
+    let result, sig = "";
+    if (protocolStatus !== "valid") result = "EXCLUDED: " + protocolStatus;
+    else if (!r.ok) result = "REJECTED: " + r.reason;
+    else if (isRef) { ref = r.sig; sig = r.sig; result = "REFERENCE ACCEPTED"; }
+    else { sig = r.sig; result = !ref ? "NO REFERENCE" : r.sig === ref ? "MATCH" : "MISMATCH"; }
+    const attempt = study.attempts.at(-1);
+    rows.push({ attemptId, role: attempt.role, retryIndex: attempt.retry_index, label, sig, result });
+    studyStatus(`${attemptId}: ${attempt.role} ${result}; retry index ${attempt.retry_index}. Reference group ${attempt.reference_group_id || "none"}.`);
+  } catch (e) {
+    if (storageError) { studyStatus("Study collection and export stopped: " + storageError.message + " Keep this tab open; do not continue."); return; }
+    if (attemptId && !study.attempts.find(attempt => attempt.attempt_id === attemptId).finished) {
+      study.finish(attemptId, { captureCode: e.code || (captureAt === null ? "camera_start_error" : "unknown"),
+        captureMs: captureAt === null ? null : performance.now() - captureAt,
+        protocolStatus });
+      try { persistStudy(); } catch { /* Collection remains locked; current records can still be exported. */ }
+    }
+    if (attemptId) {
+      const attempt = study.attempts.find(item => item.attempt_id === attemptId);
+      const result = protocolStatus === "valid" ? "REJECTED: " + e.message : "EXCLUDED: " + protocolStatus;
+      rows.push({ attemptId, role: attempt.role, retryIndex: attempt.retry_index, label, sig: "", result });
+      studyStatus(`${attemptId}: ${attempt.role} ${result}; retry index ${attempt.retry_index}. Reference group ${attempt.reference_group_id || "none"}.`);
+    } else studyStatus(e.message);
+  } finally { if (attemptId) $("studyAttemptKind").value = "new"; busy(false); $("bar").style.width = "0%"; renderLog(); releaseCamera(); }
 }
 $("btnRef").onclick = () => trial(true);
 $("btnTrial").onclick = () => trial(false);
-$("btnClear").onclick = () => { rows = []; ref = null; renderLog(); };
-$("btnCsv").onclick = () => download(new Blob([["trial,label,signature,result", ...rows.map((r, i) => [i + 1, r.label, r.sig, r.result].map(v => `"${String(v).replace(/"/g, "'")}"`).join(","))].join("\n")], { type: "text/csv" }), "gestcrypt_trials.csv");
+$("btnClear").onclick = () => { rows = []; renderLog(); };
+$("btnPlan").onclick = () => {
+  try { study.setPlanned($("studySplit").value, Number($("studyPlanned").value)); persistStudy(); studyStatus("Planned physical-attempt count saved for " + $("studySplit").value + "."); }
+  catch (e) { studyStatus(e.message); }
+};
+$("btnFreeze").onclick = () => {
+  try { study.freeze($("studyFreezeConfig").value, $("studyPilotSource").value.trim() || null); persistStudy(); studyStatus("Pilot choice frozen: " + study.frozenConfigId + ". Production margins remain unchanged."); }
+  catch (e) { studyStatus(e.message); }
+};
+$("btnCsv").onclick = () => download(new Blob([study.csv()], { type: "text/csv" }), "gestcrypt_study.csv");
+$("btnJson").onclick = () => download(new Blob([study.json()], { type: "application/json" }), "gestcrypt_study_summary.json");
+$("btnExclude").onclick = () => {
+  try {
+    const last = study.attempts.at(-1);
+    study.excludeLast();
+    persistStudy();
+    if (last.role === "reference") ref = null;
+    if (rows.length) rows[rows.length - 1] = { attemptId: last.attempt_id, role: last.role, retryIndex: last.retry_index, label: last.pose_id, sig: "", result: "EXCLUDED: protocol_invalid" };
+    studyStatus("Latest attempt excluded as protocol_invalid."); renderLog();
+  } catch (e) { studyStatus(e.message); }
+};
+window.addEventListener("storage", event => {
+  if (event.key === STUDY_STORAGE_KEY && store && !storageError) {
+    lockStudy(new Error("The local study changed in another tab. Keep this tab open and stop collection."));
+  }
+});
 
-/* ---------- Tabs ---------- */
-function tab(main) {
-  $("paneMain").classList.toggle("hidden", !main); $("paneTest").classList.toggle("hidden", main);
-  $("tabMain").className = "px-4 py-2 border-b-2 " + (main ? "border-cyan-400 text-cyan-300" : "border-transparent text-slate-400");
-  $("tabTest").className = "px-4 py-2 border-b-2 " + (!main ? "border-cyan-400 text-cyan-300" : "border-transparent text-slate-400");
+/* Tabs */
+let labRunning = false;
+$("btnLabRun").onclick = async () => {
+  if (labRunning) return;
+  labRunning = true; busy(true);
+  $("labResults").replaceChildren();
+  $("labSummary").textContent = "Running synthetic scenarios…";
+  $("labStatus").textContent = "Generating synthetic files and checking authentication…";
+  try {
+    const results = await runSecurityAttackLab(result => {
+      const card = document.createElement("article");
+      card.className = "rounded-lg border border-slate-800 bg-slate-900 p-3 text-sm";
+      const heading = document.createElement("div");
+      heading.className = "flex flex-wrap items-start justify-between gap-2";
+      const title = document.createElement("h3");
+      title.className = "font-semibold";
+      title.textContent = result.name;
+      const badge = document.createElement("strong");
+      badge.className = result.status === "PASS" ? "text-emerald-300" : result.status === "FAIL" ? "text-rose-300" : "text-amber-300";
+      badge.textContent = result.status;
+      heading.append(title, badge); card.append(heading);
+      for (const [label, value] of [["Scenario", result.explanation], ["Expected", result.expected], ["Observed", result.observed], ["Principle", result.principle]]) {
+        const line = document.createElement("p");
+        line.className = "mt-1 text-slate-300";
+        const prefix = document.createElement("strong");
+        prefix.textContent = label + ": ";
+        line.append(prefix, document.createTextNode(value));
+        card.append(line);
+      }
+      $("labResults").append(card);
+      $("labStatus").textContent = `${$("labResults").children.length} scenarios completed.`;
+    });
+    const counts = summarizeAttackLab(results);
+    $("labSummary").textContent = `${counts.total} scenarios: ${counts.resisted} attacks resisted, ${counts.controls} successful recovery control${counts.controls === 1 ? "" : "s"}, ${counts.failed} failed, ${counts.limitations} known limitation${counts.limitations === 1 ? "" : "s"}, ${counts.notTested} not run.`;
+    $("labStatus").textContent = "Attack Lab complete. Results use only synthetic files and credentials.";
+  } catch (error) {
+    $("labStatus").textContent = "Attack Lab could not complete: " + error.message;
+  } finally { labRunning = false; busy(false); }
+};
+
+function tab(which) {
+  if (studyBusy && which !== activeSection) return;
+  activeSection = which;
+  $("workspace").classList.toggle("results-view", which === "Results");
+  $("workspace").classList.toggle("lab-view", which === "Lab");
+  for (const name of sectionNames) {
+    const selected = which === name;
+    $("pane" + name).classList.toggle("hidden", !selected);
+    if (selected) $("tab" + name).setAttribute("aria-current", "page");
+    else $("tab" + name).removeAttribute("aria-current");
+  }
 }
-$("tabMain").onclick = () => tab(true);
-$("tabTest").onclick = () => tab(false);
-
-init();
+$("tabMain").onclick = () => tab("Main");
+$("tabTest").onclick = () => { tab("Test"); ensureCamera().catch(error => status(error.message)); };
+$("tabLab").onclick = () => tab("Lab");
+$("tabResults").onclick = () => tab("Results");
+$("primaryNav").addEventListener("keydown", event => {
+  if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+  const available = sectionNames.map(name => $("tab" + name)).filter(button => !button.disabled);
+  const index = available.indexOf(event.target);
+  if (index < 0) return;
+  event.preventDefault();
+  const next = event.key === "Home" ? 0 : event.key === "End" ? available.length - 1 :
+    (index + (event.key === "ArrowRight" ? 1 : -1) + available.length) % available.length;
+  available[next].focus();
+});
 </script>
 </body>
 </html>

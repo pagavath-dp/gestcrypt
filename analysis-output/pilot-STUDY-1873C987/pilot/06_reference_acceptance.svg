@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="610" viewBox="0 0 1050 610" role="img">
+<rect width="1050" height="100%" fill="#ffffff"/>
+<text x="55" y="48" fill="#17283e" font-family="Arial, sans-serif" font-size="25" font-weight="bold" text-anchor="start">Reference acceptance by configuration</text>
+<text x="55" y="77" fill="#41546b" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">STUDY-1873C987  |  PILOT — exploratory pilot  |  n=31 physical attempts</text>
+<text x="55" y="552" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Configurations: loose 0.02/1°, baseline 0.04/2°, strict 0.06/3°.</text>
+<text x="55" y="572" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Denominator: valid physical reference attempts per configuration.</text>
+<text x="55" y="592" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Valid protocol attempts only; excluded and unavailable-reference outcomes are reported separately.</text>
+<line x1="265.0" y1="140" x2="265.0" y2="455" stroke="#d1dae3"/>
+<text x="265.0" y="480" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">0%</text>
+<line x1="417.5" y1="140" x2="417.5" y2="455" stroke="#d1dae3"/>
+<text x="417.5" y="480" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">25%</text>
+<line x1="570.0" y1="140" x2="570.0" y2="455" stroke="#d1dae3"/>
+<text x="570.0" y="480" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">50%</text>
+<line x1="722.5" y1="140" x2="722.5" y2="455" stroke="#d1dae3"/>
+<text x="722.5" y="480" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">75%</text>
+<line x1="875.0" y1="140" x2="875.0" y2="455" stroke="#d1dae3"/>
+<text x="875.0" y="480" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">100%</text>
+<text x="55" y="201" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="normal" text-anchor="start">loose</text>
+<rect x="265" y="180" width="610.00" height="29" fill="#216b9a"/>
+<text x="900" y="201" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">7/7 (100%)</text>
+<text x="55" y="296" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="normal" text-anchor="start">baseline</text>
+<rect x="265" y="275" width="435.71" height="29" fill="#216b9a"/>
+<text x="900" y="296" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">5/7 (71%)</text>
+<text x="55" y="391" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="normal" text-anchor="start">strict</text>
+<rect x="265" y="370" width="87.14" height="29" fill="#216b9a"/>
+<text x="900" y="391" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">1/7 (14%)</text>
+</svg>

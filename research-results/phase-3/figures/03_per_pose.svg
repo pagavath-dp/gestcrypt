@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="975" viewBox="0 0 1050 975" role="img">
+<rect width="1050" height="100%" fill="#ffffff"/>
+<text x="55" y="48" fill="#17283e" font-family="Arial, sans-serif" font-size="25" font-weight="bold" text-anchor="start">Per-pose genuine trial outcomes</text>
+<text x="55" y="77" fill="#41546b" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">STUDY-1873C987  |  PILOT — exploratory pilot  |  n=31 physical attempts</text>
+<text x="55" y="917" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Configurations: loose 0.02/1°, baseline 0.04/2°, strict 0.06/3°.</text>
+<text x="55" y="937" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Denominator: valid genuine trials for each pose/configuration.</text>
+<text x="55" y="957" fill="#41546b" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Valid protocol attempts only; excluded and unavailable-reference outcomes are reported separately.</text>
+<rect x="55" y="100" width="14.00" height="14" fill="#17806d"/>
+<text x="75" y="112" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Match</text>
+<rect x="380" y="100" width="14.00" height="14" fill="#c46d42"/>
+<text x="400" y="112" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Mismatch</text>
+<rect x="705" y="100" width="14.00" height="14" fill="#ad4770"/>
+<text x="725" y="112" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Rejected with reference</text>
+<rect x="55" y="127" width="14.00" height="14" fill="#7852a2"/>
+<text x="75" y="139" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Rejected; no reference</text>
+<rect x="380" y="127" width="14.00" height="14" fill="#a98135"/>
+<text x="400" y="139" fill="#17283e" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Accepted; no reference</text>
+<text x="55" y="197" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">Fist</text>
+<text x="55" y="224" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">loose</text>
+<rect x="245" y="208" width="88.57" height="28" fill="#17806d"/>
+<text x="289.2857142857143" y="227" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">1</text>
+<rect x="333.57142857142856" y="208" width="265.71" height="28" fill="#c46d42"/>
+<text x="466.42857142857144" y="227" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="599.2857142857142" y="208" width="177.14" height="28" fill="#ad4770"/>
+<text x="687.8571428571428" y="227" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<rect x="776.4285714285713" y="208" width="0.00" height="28" fill="#7852a2"/>
+<rect x="776.4285714285713" y="208" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="227" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=6</text>
+<text x="55" y="259" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">baseline</text>
+<rect x="245" y="243" width="88.57" height="28" fill="#17806d"/>
+<text x="289.2857142857143" y="262" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">1</text>
+<rect x="333.57142857142856" y="243" width="177.14" height="28" fill="#c46d42"/>
+<text x="422.1428571428571" y="262" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<rect x="510.71428571428567" y="243" width="265.71" height="28" fill="#ad4770"/>
+<text x="643.5714285714286" y="262" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="776.4285714285713" y="243" width="0.00" height="28" fill="#7852a2"/>
+<rect x="776.4285714285713" y="243" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="262" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=6</text>
+<text x="55" y="294" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">strict</text>
+<rect x="245" y="278" width="0.00" height="28" fill="#17806d"/>
+<rect x="245.0" y="278" width="0.00" height="28" fill="#c46d42"/>
+<rect x="245.0" y="278" width="0.00" height="28" fill="#ad4770"/>
+<rect x="245.0" y="278" width="442.86" height="28" fill="#7852a2"/>
+<text x="466.42857142857144" y="297" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">5</text>
+<rect x="687.8571428571429" y="278" width="88.57" height="28" fill="#a98135"/>
+<text x="732.1428571428572" y="297" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">1</text>
+<text x="880" y="297" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=6</text>
+<line x1="55" y1="330" x2="970" y2="330" stroke="#d1dae3"/>
+<text x="55" y="372" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">Open Palm</text>
+<text x="55" y="399" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">loose</text>
+<rect x="245" y="383" width="531.43" height="28" fill="#17806d"/>
+<text x="510.7142857142857" y="402" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">6</text>
+<rect x="776.4285714285714" y="383" width="0.00" height="28" fill="#c46d42"/>
+<rect x="776.4285714285714" y="383" width="88.57" height="28" fill="#ad4770"/>
+<text x="820.7142857142858" y="402" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">1</text>
+<rect x="865.0" y="383" width="0.00" height="28" fill="#7852a2"/>
+<rect x="865.0" y="383" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="402" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=7</text>
+<text x="55" y="434" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">baseline</text>
+<rect x="245" y="418" width="354.29" height="28" fill="#17806d"/>
+<text x="422.1428571428571" y="437" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">4</text>
+<rect x="599.2857142857142" y="418" width="0.00" height="28" fill="#c46d42"/>
+<rect x="599.2857142857142" y="418" width="265.71" height="28" fill="#ad4770"/>
+<text x="732.1428571428571" y="437" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="865.0" y="418" width="0.00" height="28" fill="#7852a2"/>
+<rect x="865.0" y="418" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="437" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=7</text>
+<text x="55" y="469" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">strict</text>
+<rect x="245" y="453" width="0.00" height="28" fill="#17806d"/>
+<rect x="245.0" y="453" width="0.00" height="28" fill="#c46d42"/>
+<rect x="245.0" y="453" width="0.00" height="28" fill="#ad4770"/>
+<rect x="245.0" y="453" width="531.43" height="28" fill="#7852a2"/>
+<text x="510.7142857142857" y="472" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">6</text>
+<rect x="776.4285714285714" y="453" width="88.57" height="28" fill="#a98135"/>
+<text x="820.7142857142858" y="472" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">1</text>
+<text x="880" y="472" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=7</text>
+<line x1="55" y1="505" x2="970" y2="505" stroke="#d1dae3"/>
+<text x="55" y="547" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">Three Finger</text>
+<text x="55" y="574" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">loose</text>
+<rect x="245" y="558" width="531.43" height="28" fill="#17806d"/>
+<text x="510.7142857142857" y="577" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">6</text>
+<rect x="776.4285714285714" y="558" width="0.00" height="28" fill="#c46d42"/>
+<rect x="776.4285714285714" y="558" width="0.00" height="28" fill="#ad4770"/>
+<rect x="776.4285714285714" y="558" width="0.00" height="28" fill="#7852a2"/>
+<rect x="776.4285714285714" y="558" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="577" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=6</text>
+<text x="55" y="609" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">baseline</text>
+<rect x="245" y="593" width="265.71" height="28" fill="#17806d"/>
+<text x="377.8571428571429" y="612" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="510.7142857142857" y="593" width="0.00" height="28" fill="#c46d42"/>
+<rect x="510.7142857142857" y="593" width="265.71" height="28" fill="#ad4770"/>
+<text x="643.5714285714286" y="612" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="776.4285714285714" y="593" width="0.00" height="28" fill="#7852a2"/>
+<rect x="776.4285714285714" y="593" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="612" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=6</text>
+<text x="55" y="644" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">strict</text>
+<rect x="245" y="628" width="0.00" height="28" fill="#17806d"/>
+<rect x="245.0" y="628" width="0.00" height="28" fill="#c46d42"/>
+<rect x="245.0" y="628" width="0.00" height="28" fill="#ad4770"/>
+<rect x="245.0" y="628" width="531.43" height="28" fill="#7852a2"/>
+<text x="510.7142857142857" y="647" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">6</text>
+<rect x="776.4285714285714" y="628" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="647" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=6</text>
+<line x1="55" y1="680" x2="970" y2="680" stroke="#d1dae3"/>
+<text x="55" y="722" fill="#17283e" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">Swag</text>
+<text x="55" y="749" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">loose</text>
+<rect x="245" y="733" width="442.86" height="28" fill="#17806d"/>
+<text x="466.42857142857144" y="752" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">5</text>
+<rect x="687.8571428571429" y="733" width="0.00" height="28" fill="#c46d42"/>
+<rect x="687.8571428571429" y="733" width="0.00" height="28" fill="#ad4770"/>
+<rect x="687.8571428571429" y="733" width="0.00" height="28" fill="#7852a2"/>
+<rect x="687.8571428571429" y="733" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="752" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=5</text>
+<text x="55" y="784" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">baseline</text>
+<rect x="245" y="768" width="354.29" height="28" fill="#17806d"/>
+<text x="422.1428571428571" y="787" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">4</text>
+<rect x="599.2857142857142" y="768" width="0.00" height="28" fill="#c46d42"/>
+<rect x="599.2857142857142" y="768" width="88.57" height="28" fill="#ad4770"/>
+<text x="643.5714285714286" y="787" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">1</text>
+<rect x="687.8571428571428" y="768" width="0.00" height="28" fill="#7852a2"/>
+<rect x="687.8571428571428" y="768" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="787" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=5</text>
+<text x="55" y="819" fill="#17283e" font-family="Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">strict</text>
+<rect x="245" y="803" width="265.71" height="28" fill="#17806d"/>
+<text x="377.8571428571429" y="822" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<rect x="510.7142857142857" y="803" width="0.00" height="28" fill="#c46d42"/>
+<rect x="510.7142857142857" y="803" width="177.14" height="28" fill="#ad4770"/>
+<text x="599.2857142857143" y="822" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<rect x="687.8571428571429" y="803" width="0.00" height="28" fill="#7852a2"/>
+<rect x="687.8571428571429" y="803" width="0.00" height="28" fill="#a98135"/>
+<text x="880" y="822" fill="#17283e" font-family="Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">n=5</text>
+</svg>
